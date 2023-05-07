@@ -8,7 +8,7 @@ import org.hibernate.annotations.UuidGenerator;
 import java.util.UUID;
 
 @Entity
-@Table(name="author")
+@Table(name="authors")
 @NoArgsConstructor
 @Data
 public class Author {
@@ -18,10 +18,13 @@ public class Author {
     private UUID id;
     @Column(nullable = false, columnDefinition = "varchar(50)")
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar(1000)")
     private String info;
-    public Author(String name, String info) {
+    @Column(nullable = false)
+    private String image;
+    public Author(String name, String info,String image) {
         this.name = name;
         this.info = info;
+        this.image=image;
     }
 }

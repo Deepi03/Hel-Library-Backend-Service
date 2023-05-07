@@ -22,7 +22,6 @@ public class GenreServiceImpl implements GenreService {
     }
     @Override
     public Genre createOne(Genre genre){
-        System.out.println("@@@@@ " + genre.getId());
         return genreRepository.save(genre);
     }
     @Override
@@ -37,8 +36,8 @@ public class GenreServiceImpl implements GenreService {
         return  null;
     }
     @Override
-    public void deleteOne(UUID categoryId)  {
-        genreRepository.deleteById(categoryId);
+    public void deleteOne(UUID genreId)  {
+        genreRepository.deleteById(genreId);
     }
 
 }

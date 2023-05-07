@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AuthorService {
-   public  List<Author> getAllAuthors();
-   public UUID createAuthor(Author author);
-    Author getUserById(UUID authorId);
-    Author updateAuthor(Author author);
-    void deleteAuthor(UUID authorId);
+   public  List<Author> findAll();
+   public Author createOne(Author author);
+    Author findOneById(UUID authorId);
+    Author updateOne(UUID authorIdd,Author author);
+    void deleteOne(UUID authorId);
 }
