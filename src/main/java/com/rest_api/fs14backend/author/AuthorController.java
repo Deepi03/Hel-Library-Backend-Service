@@ -38,7 +38,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{authorId}")
-    public ResponseEntity<Author> findAuthorId(@PathVariable UUID authorId) {
+    public ResponseEntity<Author> findAuthorById(@PathVariable UUID authorId) {
         try{
             Author foundAuthor = authorService.findOneById(authorId);
             return foundAuthor != null ? new ResponseEntity<>(foundAuthor,HttpStatus.OK)
