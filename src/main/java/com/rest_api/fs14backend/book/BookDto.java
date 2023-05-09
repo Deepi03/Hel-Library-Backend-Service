@@ -2,10 +2,8 @@ package com.rest_api.fs14backend.book;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 import java.util.UUID;
-
 @NoArgsConstructor
 @Data
 public class BookDto {
@@ -17,4 +15,5 @@ public class BookDto {
         private String publisher;
         private String cover;
         private String description;
+        private boolean isAvailable;
 }

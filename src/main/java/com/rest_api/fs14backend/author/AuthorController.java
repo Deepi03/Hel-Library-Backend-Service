@@ -1,12 +1,10 @@
 package com.rest_api.fs14backend.author;
 
-import com.rest_api.fs14backend.genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 

@@ -1,11 +1,8 @@
 package com.rest_api.fs14backend.book;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
-@Service
 public interface BookService {
     public List<Book> findAll();
     public Book findOneById(UUID id);

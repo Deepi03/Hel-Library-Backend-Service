@@ -1,16 +1,14 @@
 package com.rest_api.fs14backend.book;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.UUID;
 
 import com.rest_api.fs14backend.author.Author;
 import com.rest_api.fs14backend.author.AuthorService;
 import com.rest_api.fs14backend.genre.Genre;
 import com.rest_api.fs14backend.genre.GenreService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
-
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -32,7 +30,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findOneById (UUID id){
-        System.out.println("##### " + bookRepository.findById(id));
         return bookRepository.findById(id).orElse(null);
     }
     @Override
@@ -70,6 +67,7 @@ public class BookServiceImpl implements BookService {
            foundBook.setPublisher(bookDto.getPublisher());
            foundBook.setCover(bookDto.getCover());
            foundBook.setDescription(bookDto.getDescription());
+           foundBook.setAvailable(bookDto.isAvailable());
            return bookRepository.save(foundBook);
        }
       return null;
