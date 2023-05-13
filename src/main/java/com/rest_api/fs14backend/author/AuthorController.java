@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/authors")
+@CrossOrigin("http://localhost:5173/authors")
 public class AuthorController {
     @Autowired
     private AuthorService authorService;
@@ -61,7 +62,7 @@ public class AuthorController {
    public ResponseEntity<String> deleteGenreById(@PathVariable UUID authorId) {
        try {
            authorService.deleteOne(authorId);
-           return new ResponseEntity<>("Author deleted", HttpStatus.OK);
+           return new ResponseEntity<>( HttpStatus.OK);
        } catch (Exception e) {
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }

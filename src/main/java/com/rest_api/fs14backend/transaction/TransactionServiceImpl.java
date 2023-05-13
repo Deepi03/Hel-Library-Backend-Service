@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void returnBook(UUID transactionId) {
         Transaction foundTransaction = transactionRepository.findById(transactionId).orElse(null);
         if (foundTransaction != null) {
-            Book foundBook = bookRepository.findById(foundTransaction.getBook().getId()).orElse(null);
+            Book foundBook = bookRepository.findById(foundTransaction.getBook()).orElse(null);
             if(foundBook !=null){
                 foundBook.setAvailable(true);
                 bookRepository.save(foundBook);

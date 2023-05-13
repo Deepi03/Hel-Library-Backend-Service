@@ -23,11 +23,11 @@ public class Book {
     private String title;
     @Column(nullable = false,columnDefinition = "varchar(50)",unique = true)
     private String isbn;
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "authorId", nullable = false)
     @ToString.Exclude
     private Author author;
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "genreId", nullable = false)
     @ToString.Exclude
     private Genre genre;
@@ -53,5 +53,12 @@ public class Book {
         this.cover = cover;
         this.description = description;
         this.isAvailable = isAvailable;
+    }
+
+    public UUID getGenre() {
+        return genre.getId();
+    }
+    public UUID getAuthor() {
+        return author.getId();
     }
 }

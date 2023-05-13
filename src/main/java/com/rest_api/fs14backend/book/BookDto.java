@@ -7,8 +7,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class BookDto {
-        private UUID genreId;
-        private UUID authorId;
+        private UUID genre;
+        private UUID author;
         private String title;
         private String isbn;
         private Date publishedDate;

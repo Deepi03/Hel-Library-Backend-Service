@@ -42,9 +42,9 @@ public class BookServiceImpl implements BookService {
     }
     @Override
     public Book createOne(BookDto bookDto) {
-        UUID authorId = bookDto.getAuthorId();
+        UUID authorId = bookDto.getAuthor();
         Author foundAuthor = authorService.findOneById(authorId);
-        UUID gereId = bookDto.getGenreId();
+        UUID gereId = bookDto.getGenre();
         Genre foundCategory = categoryService.findOneById(gereId);
         Book newBook  =  bookMapper.toBook(bookDto,foundCategory,foundAuthor);
         return bookRepository.save(newBook);
@@ -53,10 +53,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book updateOneById(UUID id,BookDto bookDto){
        Book foundBook =  bookRepository.findById(id).orElse(null);
-        UUID authorId = bookDto.getAuthorId();
+        UUID authorId = bookDto.getAuthor();
         Author foundAuthor = authorService.findOneById(authorId);
         System.out.println("### author " +  foundAuthor);
-        UUID genreId = bookDto.getGenreId();
+        UUID genreId = bookDto.getGenre();
         Genre foundGenre = categoryService.findOneById(genreId);
 
        if(foundBook != null){ foundBook.setIsbn(bookDto.getIsbn());

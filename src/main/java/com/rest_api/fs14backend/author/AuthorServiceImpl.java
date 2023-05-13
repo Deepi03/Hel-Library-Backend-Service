@@ -1,5 +1,6 @@
 package com.rest_api.fs14backend.author;
 
+import com.rest_api.fs14backend.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.UUID;
 public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public List<Author> findAll() {

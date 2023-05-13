@@ -17,7 +17,7 @@ public class Genre {
     @GeneratedValue
     @UuidGenerator
     private UUID id;
-    @Column(nullable = false , columnDefinition = "varchar(50)")
+    @Column(nullable = false , columnDefinition = "varchar(50)",unique = true)
     private String name;
     @Column(nullable = false)
     private String coverImage;

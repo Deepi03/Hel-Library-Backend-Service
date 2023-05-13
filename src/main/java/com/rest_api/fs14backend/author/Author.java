@@ -15,7 +15,7 @@ public class Author {
     @GeneratedValue
     @UuidGenerator
     private UUID id;
-    @Column(nullable = false, columnDefinition = "varchar(50)")
+    @Column(nullable = false, columnDefinition = "varchar(50)",unique = true)
     private String name;
     @Column(nullable = false, columnDefinition = "varchar(1000)")
     private String info;

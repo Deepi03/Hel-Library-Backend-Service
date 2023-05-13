@@ -21,11 +21,11 @@ public class Transaction {
     @GeneratedValue
     @UuidGenerator
     private UUID id;
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
     @ToString.Exclude
     private User user;
-    @OneToOne
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Book book;
     private Date borrowDate;
     private Date returnDate;
@@ -35,5 +35,12 @@ public class Transaction {
         this.book = book;
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
+    }
+
+    public UUID getUser() {
+        return user.getId();
+    }
+    public UUID getBook() {
+        return book.getId();
     }
 }
