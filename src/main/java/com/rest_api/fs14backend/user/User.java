@@ -25,4 +25,17 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    enum Role {
+        USER,
+        ADMIN
+    }
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
 }

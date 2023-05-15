@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/books")
+@RequestMapping("/api/v1/books/")
 public class BookController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class BookController {
         }
     }
 
-    @PostMapping()
+   /**@PostMapping()
     public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
         try{
             Book createdBook = bookService.createOne(bookDto);
@@ -35,8 +35,8 @@ public class BookController {
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-    @GetMapping("/{bookId}")
+    } **/
+    @GetMapping("{bookId}")
     public ResponseEntity<Book> findBookById(@PathVariable UUID bookId){
         try{
             Book foundBook = bookService.findOneById(bookId);
@@ -47,7 +47,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/authors/{authorId}")
+    @GetMapping("authors/{authorId}")
         public ResponseEntity<List<Book>> findBookByAuthorId(@PathVariable UUID authorId){
             try{
                 List<Book> foundBooks = bookService.findAllByAuthorId(authorId);
@@ -57,7 +57,7 @@ public class BookController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
-    @GetMapping("/genres/{genreId}")
+    @GetMapping("genres/{genreId}")
     public ResponseEntity<List<Book>> findBooksByGenreId(@PathVariable UUID genreId){
         try{
             List<Book> foundBooks = bookService.findAllByGenreId(genreId);
@@ -67,7 +67,7 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-   @PutMapping("/{bookId}")
+   /**@PutMapping("/{bookId}")
     public  ResponseEntity<Book> updateBookById(@PathVariable UUID bookId,@RequestBody BookDto bookDto){
         try{
             Book updatedBook = bookService.updateOneById(bookId,bookDto);
@@ -85,5 +85,5 @@ public class BookController {
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
+    } **/
 }

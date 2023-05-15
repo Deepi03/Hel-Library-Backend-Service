@@ -15,17 +15,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
-        try {
-            List<User> users =  userService.findAll();
-            return users.size() > 0 ? new ResponseEntity<>(users, HttpStatus.OK) :
-                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @PostMapping()
+
+    @PostMapping("/signup")
     public ResponseEntity<User> singUp(@RequestBody User user) {
         try{
             User createdUser = userService.singUp(user);
@@ -35,6 +26,17 @@ public class UserController {
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest){
+        try{
+           String token =  userService.login(authRequest);
+            return new ResponseEntity<>(token,HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
     @GetMapping("/{userId}")
     public ResponseEntity<User> findByUserId(@PathVariable UUID userId) {
