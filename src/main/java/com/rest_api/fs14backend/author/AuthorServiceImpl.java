@@ -3,6 +3,7 @@ package com.rest_api.fs14backend.author;
 import com.rest_api.fs14backend.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> findAll() {
         return authorRepository.findAll();
     }
+
     @Override
     public Author createOne(Author author) {
         return authorRepository.save(author);
@@ -25,12 +27,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findOneById(UUID authorId) {
-        return  authorRepository.findById(authorId).orElse(null);
+        return authorRepository.findById(authorId).orElse(null);
     }
+
     @Override
-    public Author updateOne(UUID authorId,Author author) {
+    public Author updateOne(UUID authorId, Author author) {
         Author foundAuthor = authorRepository.findById(authorId).orElse(null);
-        if(foundAuthor != null) {
+        if (foundAuthor != null) {
             foundAuthor.setName(author.getName());
             foundAuthor.setInfo(author.getInfo());
             foundAuthor.setImage(author.getImage());
@@ -38,8 +41,13 @@ public class AuthorServiceImpl implements AuthorService {
         }
         return null;
     }
+
     @Override
     public void deleteOne(UUID authorId) {
-    authorRepository.deleteById(authorId);
+        Author foundAuthor = authorRepository.findById(authorId).orElse(null);
+        if (bookRepository.findAllByAuthorId(foundAuthor.getId()) == null) {
+            authorRepository.deleteById(authorId);
+        }
+        throw new RuntimeException("cannot delete book");
     }
 }

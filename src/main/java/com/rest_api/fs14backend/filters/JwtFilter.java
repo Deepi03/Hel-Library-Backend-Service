@@ -23,21 +23,21 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUtils  jwtUtils;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private CustomUserUserDetailsService customUserUserDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request , HttpServletResponse response, FilterChain filterChain)
-    throws ServletException, IOException{
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         //Get Jwt token and validate
         String authorizationHeader = request.getHeader("Authorization");
 
         // if there's no token in the header -> GET OUT OF MY SYSTEM!!!
-        if(authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request,response);
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -47,16 +47,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
         UserDetails userDetails = customUserUserDetailsService.loadUserByUsername(username);
 
-        if(jwtUtils.validateToken(token,userDetails)){
+        if (jwtUtils.validateToken(token, userDetails)) {
             // add to spring security context
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource());
             authenticationToken.setDetails(
                     new WebAuthenticationDetailsSource().buildDetails(request)
             );
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
         }
     }
 }

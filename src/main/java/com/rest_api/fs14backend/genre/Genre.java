@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+
 import java.util.UUID;
 
 @Entity
@@ -17,7 +18,7 @@ public class Genre {
     @GeneratedValue
     @UuidGenerator
     private UUID id;
-    @Column(nullable = false , columnDefinition = "varchar(50)",unique = true)
+    @Column(nullable = false, columnDefinition = "varchar(50)", unique = true)
     private String name;
     @Column(nullable = false)
     private String coverImage;

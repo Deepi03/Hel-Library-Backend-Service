@@ -18,35 +18,36 @@ public class TransactionController {
     TransactionService transactionService;
 
 
-
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Transaction>> getTransactionsByUserId(@PathVariable UUID userId,@RequestHeader String authorization){
-        try{
-            List<Transaction> foundTransactions = transactionService.findAllByUserId(userId,authorization);
-            return foundTransactions.size() > 0 ? new ResponseEntity<>(foundTransactions,HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND) ;
-        }
-        catch (HttpClientErrorException.BadRequest e){
+    public ResponseEntity<List<Transaction>> getTransactionsByUserId(@PathVariable UUID userId, @RequestHeader String authorization) {
+        try {
+            List<Transaction> foundTransactions = transactionService.findAllByUserId(userId, authorization);
+            return foundTransactions.size() > 0 ? new ResponseEntity<>(foundTransactions, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (HttpClientErrorException.BadRequest e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    /** Borrow Book **/
+    /**
+     * Borrow Book
+     **/
     @PostMapping("/borrow")
-    public ResponseEntity<String> createTransaction(@RequestBody BorrowDto borrowDto,@RequestHeader String authorization){
-            transactionService.borrowBook(borrowDto,authorization);
-            return new ResponseEntity<>("Book borrowed", HttpStatus.OK);
+    public ResponseEntity<String> createTransaction(@RequestBody BorrowDto borrowDto, @RequestHeader String authorization) {
+        transactionService.borrowBook(borrowDto, authorization);
+        return new ResponseEntity<>("Book borrowed", HttpStatus.OK);
     }
+
     @DeleteMapping("/{transactionId}")
-    public ResponseEntity<String> deleteTransaction(@PathVariable UUID transactionId,@RequestHeader String authorization){
-        try{
-            transactionService.returnBook(transactionId,authorization);
+    public ResponseEntity<String> deleteTransaction(@PathVariable UUID transactionId, @RequestHeader String authorization) {
+        try {
+            transactionService.returnBook(transactionId, authorization);
             return new ResponseEntity<>("Book returned", HttpStatus.OK);
-        }  catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -7,21 +7,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
+
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="books")
+@Table(name = "books")
 @NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue
     @UuidGenerator
     private UUID id;
-    @Column(nullable = false,columnDefinition = "varchar(50)",unique = true)
+    @Column(nullable = false, columnDefinition = "varchar(50)", unique = true)
     private String title;
-    @Column(nullable = false,columnDefinition = "varchar(50)",unique = true)
+    @Column(nullable = false, columnDefinition = "varchar(50)", unique = true)
     private String isbn;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "authorId", nullable = false)
@@ -37,13 +38,13 @@ public class Book {
     private String publisher;
     @Column(nullable = false)
     private String cover;
-    @Column(nullable = false,columnDefinition = "varchar(2000)")
+    @Column(nullable = false, columnDefinition = "varchar(2000)")
     private String description;
     @Column(nullable = false)
     private boolean isAvailable;
 
     public Book(String title, String isbn, Author author, Genre genre, Date publishedDate, String publisher,
-                String cover,String description,boolean isAvailable) {
+                String cover, String description, boolean isAvailable) {
         this.title = title;
         this.isbn = isbn;
         this.author = author;
@@ -58,6 +59,7 @@ public class Book {
     public UUID getGenre() {
         return genre.getId();
     }
+
     public UUID getAuthor() {
         return author.getId();
     }

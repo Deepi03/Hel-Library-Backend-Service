@@ -1,7 +1,9 @@
 package com.rest_api.fs14backend.book;
 
+import com.rest_api.fs14backend.transaction.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -23,60 +25,66 @@ public class BookServiceImpl implements BookService {
     @Autowired
     BookMapper bookMapper;
 
+    @Autowired
+    TransactionRepository transactionRepository;
+
     @Override
-    public List<Book> findAll(){
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
     @Override
-    public Book findOneById (UUID id){
+    public Book findOneById(UUID id) {
         return bookRepository.findById(id).orElse(null);
     }
+
     @Override
-    public  List<Book> findAllByAuthorId(UUID authorId){
+    public List<Book> findAllByAuthorId(UUID authorId) {
         return bookRepository.findAllByAuthorId(authorId);
     }
+
     @Override
-    public  List<Book> findAllByGenreId(UUID genreId){
+    public List<Book> findAllByGenreId(UUID genreId) {
         return bookRepository.findAllByGenreId(genreId);
     }
+
     @Override
     public Book createOne(BookDto bookDto) {
         UUID authorId = bookDto.getAuthor();
         Author foundAuthor = authorService.findOneById(authorId);
         UUID gereId = bookDto.getGenre();
         Genre foundCategory = categoryService.findOneById(gereId);
-        Book newBook  =  bookMapper.toBook(bookDto,foundCategory,foundAuthor);
+        Book newBook = bookMapper.toBook(bookDto, foundCategory, foundAuthor);
         return bookRepository.save(newBook);
     }
 
     @Override
-    public Book updateOneById(UUID id,BookDto bookDto){
-       Book foundBook =  bookRepository.findById(id).orElse(null);
+    public Book updateOneById(UUID id, BookDto bookDto) {
+        Book foundBook = bookRepository.findById(id).orElse(null);
         UUID authorId = bookDto.getAuthor();
         Author foundAuthor = authorService.findOneById(authorId);
-        System.out.println("### author " +  foundAuthor);
+        System.out.println("### author " + foundAuthor);
         UUID genreId = bookDto.getGenre();
         Genre foundGenre = categoryService.findOneById(genreId);
 
-       if(foundBook != null){ foundBook.setIsbn(bookDto.getIsbn());
-           foundBook.setTitle(bookDto.getTitle());
-           foundBook.setAuthor(foundAuthor);
-           foundBook.setGenre(foundGenre);
-           foundBook.setPublishedDate(bookDto.getPublishedDate());
-           foundBook.setPublisher(bookDto.getPublisher());
-           foundBook.setCover(bookDto.getCover());
-           foundBook.setDescription(bookDto.getDescription());
-           foundBook.setAvailable(bookDto.isAvailable());
-           return bookRepository.save(foundBook);
-       }
-      return null;
+        if (foundBook != null) {
+            foundBook.setIsbn(bookDto.getIsbn());
+            foundBook.setTitle(bookDto.getTitle());
+            foundBook.setAuthor(foundAuthor);
+            foundBook.setGenre(foundGenre);
+            foundBook.setPublishedDate(bookDto.getPublishedDate());
+            foundBook.setPublisher(bookDto.getPublisher());
+            foundBook.setCover(bookDto.getCover());
+            foundBook.setDescription(bookDto.getDescription());
+            foundBook.setAvailable(bookDto.isAvailable());
+            return bookRepository.save(foundBook);
+        }
+        return null;
     }
 
     @Override
-    public void deleteOneById(UUID id){
+    public void deleteOneById(UUID id) {
+        Book foundBook = bookRepository.findById(id).orElse(null);
         bookRepository.deleteById(id);
     }
-
-
 }

@@ -6,11 +6,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
@@ -22,15 +23,17 @@ public class UserServiceImpl implements UserService{
     private JwtUtils jwtUtils;
 
     @Override
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
+
     @Override
-    public User findOneById(UUID userId){
+    public User findOneById(UUID userId) {
         return userRepository.findById(userId).orElse(null);
     }
+
     @Override
-    public String login(AuthRequest authRequest){
+    public String login(AuthRequest authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                         authRequest.getPassword())
@@ -40,8 +43,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public  User singUp(User user){
-        User newUser = new User(user.getUsername(),passwordEncoder.encode(user.getPassword()),User.Role.USER);
+    public User singUp(User user) {
+        User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), User.Role.USER);
         return userRepository.save(newUser);
     }
-    }
+}

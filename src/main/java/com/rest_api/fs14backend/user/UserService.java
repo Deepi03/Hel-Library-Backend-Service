@@ -5,8 +5,11 @@ import java.util.UUID;
 
 public interface UserService {
     List<User> findAll();
+
     User findOneById(UUID id);
+
     User singUp(User user);
+
     String login(AuthRequest authRequest);
 
 }

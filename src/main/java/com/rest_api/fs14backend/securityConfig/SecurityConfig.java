@@ -26,9 +26,10 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration ) throws Exception {
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -49,16 +50,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("GET","/api/v1/books/*").permitAll()
-                .requestMatchers("GET","/api/v1/authors/*").permitAll()
-                .requestMatchers("GET","/api/v1/genres/*").permitAll()
-                .requestMatchers("GET","/api/v1/books/authors/*").permitAll()
-                .requestMatchers("GET","/api/v1/books/genres/*").permitAll()
+                .requestMatchers("GET", "/api/v1/books/*").permitAll()
+                .requestMatchers("GET", "/api/v1/authors/*").permitAll()
+                .requestMatchers("GET", "/api/v1/genres/*").permitAll()
+                .requestMatchers("GET", "/api/v1/books/authors/*").permitAll()
+                .requestMatchers("GET", "/api/v1/books/genres/*").permitAll()
                 .requestMatchers("GET", "api/v1/admin/").hasRole("ADMIN")
                 .requestMatchers("POST", "api/v1/admin/addBook").hasRole("ADMIN")
                 .requestMatchers("POST", "api/v1/admin/addAuthor").hasRole("ADMIN")
@@ -71,7 +72,7 @@ public class SecurityConfig {
                 .requestMatchers("DELETE", "api/v1/admin/deleteBook/*").hasRole("ADMIN")
                 .requestMatchers("GET", "api/v1/admin/users").hasRole("ADMIN")
                 .requestMatchers("GET", "api/v1/admin/allTransactions").hasRole("ADMIN")
-                .requestMatchers("POST","api/v1/users/signup","POST","api/v1/users/signin").permitAll()
+                .requestMatchers("POST", "api/v1/users/signup", "POST", "api/v1/users/signin").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -80,7 +81,7 @@ public class SecurityConfig {
                 .and()
                 .addFilter(corsFilter())
                 //  Add JWT token filter
-                .addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

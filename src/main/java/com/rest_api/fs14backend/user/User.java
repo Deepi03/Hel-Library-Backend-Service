@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+
 import java.util.UUID;
 
 @Entity
@@ -16,22 +17,25 @@ public class User {
     @GeneratedValue
     @UuidGenerator
     private UUID id;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    public User(String username, String password){
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
     enum Role {
         USER,
         ADMIN
     }
+
     public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
