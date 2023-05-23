@@ -49,7 +49,7 @@ public class TransactionController {
     }
 
     @GetMapping("/return/{transactionId}")
-    public ResponseEntity<String> deleteTransaction(@PathVariable UUID transactionId, @RequestHeader String authorization) {
+    public ResponseEntity<String> updateTransaction(@PathVariable UUID transactionId, @RequestHeader String authorization) {
         try {
             transactionService.returnBook(transactionId, authorization);
             return new ResponseEntity<>("Book returned", HttpStatus.OK);

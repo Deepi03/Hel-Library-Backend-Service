@@ -10,7 +10,10 @@ public interface TransactionService {
     void returnBook(UUID transactionId, String authorization);
 
     List<Transaction> findAllByUserId(UUID userId, String authorization);
+    List<Transaction> findAllByBookId(UUID bookId);
 
     List<Transaction> findAll();
+
+    void deleteOne(UUID transactionId) ;
 
 }

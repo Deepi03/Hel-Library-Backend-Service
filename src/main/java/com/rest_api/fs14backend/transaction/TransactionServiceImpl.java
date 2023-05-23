@@ -1,6 +1,10 @@
 package com.rest_api.fs14backend.transaction;
 
 
+import com.rest_api.fs14backend.author.Author;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionNotFoundException;
+import com.rest_api.fs14backend.exceptions.author.AuthorCannotBeDeletedException;
+import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
 import com.rest_api.fs14backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +50,10 @@ public class TransactionServiceImpl implements TransactionService {
         return null;
     }
 
+    @Override
+    public List<Transaction> findAllByBookId(UUID bookId) {
+        return transactionRepository.findAllByBookId(bookId);
+    }
     @Override
     public Transaction borrowBook(BorrowDto borrowDto, String authorization)  {
         UUID userId = borrowDto.getUserId();
@@ -98,6 +106,16 @@ public class TransactionServiceImpl implements TransactionService {
                     throw new RuntimeException("Not allowed");
                 }
             }
+        }
+    }
+
+    @Override
+    public void deleteOne(UUID transactionId) {
+        Transaction foundTransaction =  transactionRepository.findById(transactionId).orElse(null);
+        if(foundTransaction != null){
+            transactionRepository.deleteById(transactionId);
+        } else {
+            throw new TransactionNotFoundException();
         }
     }
 

@@ -1,5 +1,8 @@
 package com.rest_api.fs14backend.book;
 
+import com.rest_api.fs14backend.exceptions.book.BookCannotBeDeletedException;
+import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
+import com.rest_api.fs14backend.transaction.Transaction;
 import com.rest_api.fs14backend.transaction.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,8 +86,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteOneById(UUID id) {
-        Book foundBook = bookRepository.findById(id).orElse(null);
-        bookRepository.deleteById(id);
+    public void deleteOneById(UUID bookId) {
+        Book foundBook = bookRepository.findById(bookId).orElse(null);
+        if(foundBook != null){
+            List<Transaction> foundTransactions = transactionRepository.findAllByBookId(foundBook.getId());
+            if(foundTransactions.size() > 0){
+                throw new BookCannotBeDeletedException();
+            }
+            bookRepository.deleteById(bookId);
+        } else {
+            throw new BookNotFoundException();
+        }
     }
 }
+

@@ -7,6 +7,8 @@ import com.rest_api.fs14backend.book.BookDto;
 import com.rest_api.fs14backend.book.BookService;
 import com.rest_api.fs14backend.exceptions.author.AuthorBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
+import com.rest_api.fs14backend.exceptions.book.BookBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
 import com.rest_api.fs14backend.genre.Genre;
 import com.rest_api.fs14backend.genre.GenreService;
 import com.rest_api.fs14backend.transaction.Transaction;
@@ -16,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
 import java.util.UUID;
@@ -85,32 +88,32 @@ public class AdminController {
             Book createdBook = bookService.createOne(bookDto);
             return new ResponseEntity<>(createdBook,HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new BookBadInputRequestException();
         }
     }
 
     @PutMapping("/updateBook/{bookId}")
     public  ResponseEntity<Book> updateBookById(@PathVariable UUID bookId,@RequestBody BookDto bookDto){
+
         try{
             Book updatedBook = bookService.updateOneById(bookId,bookDto);
-            return updatedBook != null ? new ResponseEntity<>(updatedBook,HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            if(updatedBook == null )
+            {
+                throw new BookNotFoundException();
+            }
+            return new ResponseEntity<>(updatedBook,HttpStatus.OK);
+        } catch (DataIntegrityViolationException e){
+            throw new BookBadInputRequestException();
         }
     }
 
     @DeleteMapping("/deleteBook/{bookId}")
     public ResponseEntity<String> deleteBookId(@PathVariable UUID bookId) {
-        try{
+        try {
             bookService.deleteOneById(bookId);
-            return new ResponseEntity<>("Book deleted",HttpStatus.OK);
-        }  catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            throw new BookBadInputRequestException();
         }
     }
 
