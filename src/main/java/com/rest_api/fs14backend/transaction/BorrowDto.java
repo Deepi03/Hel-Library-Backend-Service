@@ -13,7 +13,7 @@ public class BorrowDto extends TranscationDto {
     private Day day;
 
     enum Day {
-        TEN, TWENTY
+            TEN, TWENTY,THIRTY
     }
 
     public BorrowDto(UUID bookId, UUID userId, Day day) {

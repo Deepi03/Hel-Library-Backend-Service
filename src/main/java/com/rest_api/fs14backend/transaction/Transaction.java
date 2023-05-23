@@ -25,16 +25,19 @@ public class Transaction {
     @JoinColumn(name = "userId", nullable = false)
     @ToString.Exclude
     private User user;
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Book book;
     private Date borrowDate;
     private Date returnDate;
+    private boolean isReturned;
+    private Date toBeReturned;
 
-    public Transaction(User user, Book book, Date borrowDate, Date returnDate) {
+    public Transaction(User user, Book book, Date borrowDate, Date toBeReturned,boolean isReturned) {
         this.user = user;
         this.book = book;
         this.borrowDate = borrowDate;
-        this.returnDate = returnDate;
+        this.toBeReturned = toBeReturned;
+        this.isReturned  = isReturned;
     }
 
     public UUID getUser() {

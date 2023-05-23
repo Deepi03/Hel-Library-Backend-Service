@@ -8,8 +8,8 @@ public interface UserService {
 
     User findOneById(UUID id);
 
-    User singUp(User user);
+    String singUp(User user);
 
-    String login(AuthRequest authRequest);
+    AuthResponse login(AuthRequest authRequest);
 
 }

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface TransactionService {
 
-    void borrowBook(BorrowDto borrowDto, String authorization);
+    Transaction borrowBook(BorrowDto borrowDto, String authorization);
 
     void returnBook(UUID transactionId, String authorization);
 

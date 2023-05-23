@@ -5,6 +5,8 @@ import com.rest_api.fs14backend.author.AuthorService;
 import com.rest_api.fs14backend.book.Book;
 import com.rest_api.fs14backend.book.BookDto;
 import com.rest_api.fs14backend.book.BookService;
+import com.rest_api.fs14backend.exceptions.author.AuthorBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
 import com.rest_api.fs14backend.genre.Genre;
 import com.rest_api.fs14backend.genre.GenreService;
 import com.rest_api.fs14backend.transaction.Transaction;
@@ -43,10 +45,9 @@ public class AdminController {
             Author createdAuthor = authorService.createOne(author);
             return new ResponseEntity<>(createdAuthor, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new AuthorBadInputRequestException();
         }
+
     }
 
     @PutMapping("/updateAuthor/{authorId}")
@@ -54,24 +55,27 @@ public class AdminController {
                                                    @RequestBody Author author) {
         try{
             Author updatedAuthor = authorService.updateOne(authorId,author);
-            return updatedAuthor != null ? new ResponseEntity<>(updatedAuthor,HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            if(updatedAuthor == null )
+            {
+                throw new AuthorNotFoundException();
+            }
+            return new ResponseEntity<>(updatedAuthor,HttpStatus.OK);
+        } catch (DataIntegrityViolationException e){
+            throw new AuthorBadInputRequestException();
         }
+
+
     }
     @DeleteMapping("/deleteAuthor/{authorId}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable UUID authorId) {
         try {
             authorService.deleteOne(authorId);
-            return new ResponseEntity<>( HttpStatus.OK);
-        }  catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            throw new AuthorBadInputRequestException();
+
         }
     }
-
 
     /** ==== Book === **/
 

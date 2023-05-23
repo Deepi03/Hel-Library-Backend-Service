@@ -47,25 +47,31 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void borrowBook(BorrowDto borrowDto, String authorization) {
+    public Transaction borrowBook(BorrowDto borrowDto, String authorization)  {
         UUID userId = borrowDto.getUserId();
         User foundUser = userRepository.findById(userId).orElse(null);
         UUID bookId = borrowDto.getBookId();
         Book foundBook = bookRepository.findById(bookId).orElse(null);
+        System.out.println("####" + " book "+foundBook +" user "+ foundUser);
         String token = authorization.substring(7);
         String userIdFromToken = jwtUtils.extractUserId(token);
         if (userIdFromToken.equals(userId.toString())) {
             if (foundBook != null) {
                 if (foundBook.isAvailable()) {
-                    Transaction borrow = transactionMapper.toTransaction(foundUser, foundBook, new Date(), returnDate(borrowDto.getDay().toString()));
+                   // System.out.println("####" + " book "+foundBook +" user "+ foundUser);
+                    Transaction borrow = transactionMapper.toTransaction(foundUser, foundBook,
+                            new Date(), toBeReturnedDate(borrowDto.getDay().toString()), false);
                     foundBook.setAvailable(false);
                     bookRepository.save(foundBook);
-                    transactionRepository.save(borrow);
+                    return transactionRepository.save(borrow);
                 } else {
                     throw new RuntimeException("Book is not available");
                 }
+            } else {
+                return null;
             }
         }
+        return null;
     }
 
     @Override
@@ -79,11 +85,15 @@ public class TransactionServiceImpl implements TransactionService {
             if (foundUser != null) {
                 String userId = foundUser.getId().toString();
                 if (userIdFromToken.equals(userId)) {
+                    foundTransaction.setReturned(true);
+                    foundTransaction.setReturnDate(new Date());
+                    System.out.println("returned transaction"+ foundTransaction);
+                    transactionRepository.save(foundTransaction);
                     if (foundBook != null) {
                         foundBook.setAvailable(true);
                         bookRepository.save(foundBook);
+                        System.out.println("book available"+ foundBook);
                     }
-                    transactionRepository.delete(foundTransaction);
                 } else {
                     throw new RuntimeException("Not allowed");
                 }
@@ -95,7 +105,7 @@ public class TransactionServiceImpl implements TransactionService {
         return Timestamp.valueOf(localDateTime);
     }
 
-    private Date returnDate(String days) {
+    private Date toBeReturnedDate(String days) {
         Date today = new Date();
         LocalDateTime ldt = LocalDateTime.now();
         switch (days) {
@@ -105,9 +115,10 @@ public class TransactionServiceImpl implements TransactionService {
             case "TWENTY" -> {
                 return today = convertLocalDateTimeToDateUsingTimestamp(ldt.plusDays(20));
             }
-            default -> {
+            case "THIRTY" -> {
                 return today = convertLocalDateTimeToDateUsingTimestamp(ldt.plusDays(30));
             }
         }
+        return null;
     }
 }

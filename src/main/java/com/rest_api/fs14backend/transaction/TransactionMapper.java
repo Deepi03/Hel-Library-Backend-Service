@@ -9,7 +9,7 @@ import com.rest_api.fs14backend.user.User;
 
 @Component
 public class TransactionMapper {
-    public Transaction toTransaction(User user, Book book, Date borrowDate, Date returnDate) {
-        return new Transaction(user, book, borrowDate, returnDate);
+    public Transaction toTransaction(User user, Book book, Date borrowDate, Date returnDate,boolean isReturned) {
+        return new Transaction(user, book, borrowDate, returnDate,isReturned);
     }
 }

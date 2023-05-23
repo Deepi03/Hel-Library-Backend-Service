@@ -18,7 +18,7 @@ public class TransactionController {
     TransactionService transactionService;
 
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<Transaction>> getTransactionsByUserId(@PathVariable UUID userId, @RequestHeader String authorization) {
         try {
             List<Transaction> foundTransactions = transactionService.findAllByUserId(userId, authorization);
@@ -35,12 +35,20 @@ public class TransactionController {
      * Borrow Book
      **/
     @PostMapping("/borrow")
-    public ResponseEntity<String> createTransaction(@RequestBody BorrowDto borrowDto, @RequestHeader String authorization) {
-        transactionService.borrowBook(borrowDto, authorization);
-        return new ResponseEntity<>("Book borrowed", HttpStatus.OK);
+    public ResponseEntity<Transaction> createTransaction
+    (@RequestBody BorrowDto borrowDto, @RequestHeader String authorization) {
+        try{
+            Transaction createdTransaction  = transactionService.borrowBook(borrowDto, authorization);
+            return new ResponseEntity<>(createdTransaction,HttpStatus.OK);
+        }catch (DataIntegrityViolationException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @DeleteMapping("/{transactionId}")
+    @GetMapping("/return/{transactionId}")
     public ResponseEntity<String> deleteTransaction(@PathVariable UUID transactionId, @RequestHeader String authorization) {
         try {
             transactionService.returnBook(transactionId, authorization);

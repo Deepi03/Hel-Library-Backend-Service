@@ -17,10 +17,10 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> singUp(@RequestBody User user) {
+    public ResponseEntity<String> singUp(@RequestBody User user) {
         try{
-            User createdUser = userService.singUp(user);
-            return new ResponseEntity<>(createdUser,HttpStatus.CREATED);
+            String createdUserMessage = userService.singUp(user);
+            return new ResponseEntity<>(createdUserMessage,HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e){
@@ -29,12 +29,12 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest){
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest){
         try{
-           String token =  userService.login(authRequest);
-            return new ResponseEntity<>(token,HttpStatus.OK);
+           AuthResponse response =  userService.login(authRequest);
+            return  new ResponseEntity<>(response,HttpStatus.OK);
         } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }

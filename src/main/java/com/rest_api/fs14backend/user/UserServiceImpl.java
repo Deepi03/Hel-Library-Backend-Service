@@ -33,18 +33,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(AuthRequest authRequest) {
+    public AuthResponse login(AuthRequest authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(),
                         authRequest.getPassword())
         );
         User user = userRepository.findByUsername(authRequest.getUsername());
-        return jwtUtils.generateToken(user);
+        return new AuthResponse(jwtUtils.generateToken(user)) ;
     }
 
     @Override
-    public User singUp(User user) {
+    public String singUp(User user) {
         User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), User.Role.USER);
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
+        return "User Created Successfully";
+
     }
 }

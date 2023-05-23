@@ -1,6 +1,9 @@
 package com.rest_api.fs14backend.author;
 
+import com.rest_api.fs14backend.book.Book;
 import com.rest_api.fs14backend.book.BookRepository;
+import com.rest_api.fs14backend.exceptions.author.AuthorCannotBeDeletedException;
+import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author updateOne(UUID authorId, Author author) {
-        Author foundAuthor = authorRepository.findById(authorId).orElse(null);
+        Author foundAuthor = findOneById(authorId);
         if (foundAuthor != null) {
             foundAuthor.setName(author.getName());
             foundAuthor.setInfo(author.getInfo());
@@ -44,10 +47,15 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteOne(UUID authorId) {
-        Author foundAuthor = authorRepository.findById(authorId).orElse(null);
-        if (bookRepository.findAllByAuthorId(foundAuthor.getId()) == null) {
+        Author foundAuthor =  findOneById(authorId);
+        if(foundAuthor != null){
+            List<Book> foundBooks = bookRepository.findAllByAuthorId(foundAuthor.getId());
+            if(foundBooks.size() > 0){
+                throw new AuthorCannotBeDeletedException();
+            }
             authorRepository.deleteById(authorId);
+        } else {
+           throw new AuthorNotFoundException();
         }
-        throw new RuntimeException("cannot delete book");
     }
 }
