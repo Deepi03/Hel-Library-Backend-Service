@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String singUp(User user) {
-        User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), User.Role.USER);
+        User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), User.Role.ADMIN);
             userRepository.save(newUser);
             return "User Created Successfully";
     }
