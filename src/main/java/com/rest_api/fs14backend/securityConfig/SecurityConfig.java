@@ -70,6 +70,7 @@ public class SecurityConfig {
                 .requestMatchers("DELETE", "api/v1/admin/deleteGenre/*").hasRole("ADMIN")
                 .requestMatchers("DELETE", "api/v1/admin/deleteAuthor/*").hasRole("ADMIN")
                 .requestMatchers("DELETE", "api/v1/admin/deleteBook/*").hasRole("ADMIN")
+                .requestMatchers("DELETE", "api/v1/admin/deleteTransaction/*").hasRole("ADMIN")
                 .requestMatchers("GET", "api/v1/admin/users").hasRole("ADMIN")
                 .requestMatchers("GET", "api/v1/admin/allTransactions").hasRole("ADMIN")
                 .requestMatchers("POST", "api/v1/users/signup", "POST", "api/v1/users/signin").permitAll()

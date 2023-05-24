@@ -1,5 +1,8 @@
 package com.rest_api.fs14backend.book;
 
+import com.rest_api.fs14backend.author.Author;
+import com.rest_api.fs14backend.exceptions.author.AuthorBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,45 +21,25 @@ public class BookController {
 
     @GetMapping()
     public ResponseEntity<List<Book>> getAllBooks() {
-        try {
-            List<Book> books = bookService.findAll();
-            return books.size() > 0 ? new ResponseEntity<>(books, HttpStatus.OK) :
-                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        List<Book> foundBooks = bookService.findAll();
+        return  new ResponseEntity<>(foundBooks, HttpStatus.OK);
     }
 
     @GetMapping("{bookId}")
     public ResponseEntity<Book> findBookById(@PathVariable UUID bookId) {
-        try {
             Book foundBook = bookService.findOneById(bookId);
-            return foundBook != null ? new ResponseEntity<>(foundBook, HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return new ResponseEntity<>(foundBook,HttpStatus.OK) ;
     }
 
     @GetMapping("authors/{authorId}")
     public ResponseEntity<List<Book>> findBookByAuthorId(@PathVariable UUID authorId) {
-        try {
             List<Book> foundBooks = bookService.findAllByAuthorId(authorId);
-            return foundBooks.size() > 0 ? new ResponseEntity<>(foundBooks, HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return  new ResponseEntity<>(foundBooks, HttpStatus.OK);
     }
 
     @GetMapping("genres/{genreId}")
     public ResponseEntity<List<Book>> findBooksByGenreId(@PathVariable UUID genreId) {
-        try {
             List<Book> foundBooks = bookService.findAllByGenreId(genreId);
-            return foundBooks.size() > 0 ? new ResponseEntity<>(foundBooks, HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return  new ResponseEntity<>(foundBooks, HttpStatus.OK);
     }
 }

@@ -33,22 +33,40 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        List<Book> books =  bookRepository.findAll();
+       if(books.size() <= 0){
+           throw new BookNotFoundException();
+       } else {
+           return books;
+       }
     }
 
     @Override
     public Book findOneById(UUID id) {
-        return bookRepository.findById(id).orElse(null);
+        Book foundBook = bookRepository.findById(id).orElse(null);
+        if(foundBook == null){
+            throw new BookNotFoundException();
+        } else {
+            return foundBook;
+        }
     }
 
     @Override
     public List<Book> findAllByAuthorId(UUID authorId) {
-        return bookRepository.findAllByAuthorId(authorId);
+        List<Book> books =  bookRepository.findAllByAuthorId(authorId);
+        if(books.size() <= 0){
+            throw new BookNotFoundException();
+        }
+        return books;
     }
 
     @Override
     public List<Book> findAllByGenreId(UUID genreId) {
-        return bookRepository.findAllByGenreId(genreId);
+        List<Book> books =  bookRepository.findAllByAuthorId(genreId);
+        if(books.size() <= 0){
+            throw new BookNotFoundException();
+        }
+        return books;
     }
 
     @Override
@@ -66,7 +84,6 @@ public class BookServiceImpl implements BookService {
         Book foundBook = bookRepository.findById(id).orElse(null);
         UUID authorId = bookDto.getAuthor();
         Author foundAuthor = authorService.findOneById(authorId);
-        System.out.println("### author " + foundAuthor);
         UUID genreId = bookDto.getGenre();
         Genre foundGenre = categoryService.findOneById(genreId);
 

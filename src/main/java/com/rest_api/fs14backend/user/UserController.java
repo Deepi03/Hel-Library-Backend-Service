@@ -1,6 +1,9 @@
 package com.rest_api.fs14backend.user;
 
+import com.rest_api.fs14backend.ResponseEnt;
 import com.rest_api.fs14backend.author.Author;
+import com.rest_api.fs14backend.exceptions.User.LoginCredentialsNotMatchException;
+import com.rest_api.fs14backend.exceptions.User.UserBadInputRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -17,14 +20,13 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> singUp(@RequestBody User user) {
+    public ResponseEnt singUp(@RequestBody User user) {
         try{
             String createdUserMessage = userService.singUp(user);
-            return new ResponseEntity<>(createdUserMessage,HttpStatus.CREATED);
+            return new ResponseEnt(200,"User created Successfully");
         } catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+            throw new UserBadInputRequestException();
         }
     }
 
@@ -34,7 +36,7 @@ public class UserController {
            AuthResponse response =  userService.login(authRequest);
             return  new ResponseEntity<>(response,HttpStatus.OK);
         } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new LoginCredentialsNotMatchException();
         }
 
     }

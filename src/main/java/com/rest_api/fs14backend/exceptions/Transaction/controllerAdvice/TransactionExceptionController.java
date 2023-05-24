@@ -1,9 +1,9 @@
-package com.rest_api.fs14backend.exceptions.author.controllerAdvice;
+package com.rest_api.fs14backend.exceptions.Transaction.controllerAdvice;
 
 import com.rest_api.fs14backend.ResponseEnt;
-import com.rest_api.fs14backend.exceptions.author.AuthorBadInputRequestException;
-import com.rest_api.fs14backend.exceptions.author.AuthorCannotBeDeletedException;
-import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeDeletedException;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
-public class AuthorExceptionController {
-    @ExceptionHandler(value = AuthorNotFoundException.class)
+public class TransactionExceptionController {
+    @ExceptionHandler(value = TransactionNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ResponseEnt handleNotFound(AuthorNotFoundException exception) {
+    public ResponseEnt handleNotFound(TransactionNotFoundException exception) {
         return new ResponseEnt( HttpStatus.NOT_FOUND.value(),exception.getMessage());
     }
 
-    @ExceptionHandler(value = AuthorBadInputRequestException.class)
+    @ExceptionHandler(value = TransactionBadInputRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ResponseEnt handleBadInputRequest(AuthorBadInputRequestException authorBadInputRequestException) {
+    public ResponseEnt handleBadInputRequest(TransactionBadInputRequestException authorBadInputRequestException) {
         return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), authorBadInputRequestException.getMessage());
     }
 
-    @ExceptionHandler(value = AuthorCannotBeDeletedException.class)
+    @ExceptionHandler(value = TransactionCannotBeDeletedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ResponseEnt handleCannotDelete(AuthorCannotBeDeletedException authorCannotBeDeletedException) {
+    public ResponseEnt handleCannotDelete(TransactionCannotBeDeletedException authorCannotBeDeletedException) {
         return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), authorCannotBeDeletedException.getMessage());
     }
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)

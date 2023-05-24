@@ -2,9 +2,14 @@ package com.rest_api.fs14backend.transaction;
 
 
 import com.rest_api.fs14backend.author.Author;
+import com.rest_api.fs14backend.book.BookService;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeDeletedException;
 import com.rest_api.fs14backend.exceptions.Transaction.TransactionNotFoundException;
 import com.rest_api.fs14backend.exceptions.author.AuthorCannotBeDeletedException;
 import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
+import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
+import com.rest_api.fs14backend.user.UserService;
 import com.rest_api.fs14backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +33,10 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionMapper transactionMapper;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
+    @Autowired
+    BookService bookService;
     @Autowired
     BookRepository bookRepository;
     @Autowired
@@ -57,10 +64,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction borrowBook(BorrowDto borrowDto, String authorization)  {
         UUID userId = borrowDto.getUserId();
-        User foundUser = userRepository.findById(userId).orElse(null);
+        User foundUser =userService.findOneById(userId);
         UUID bookId = borrowDto.getBookId();
-        Book foundBook = bookRepository.findById(bookId).orElse(null);
-        System.out.println("####" + " book "+foundBook +" user "+ foundUser);
+        Book foundBook =bookService.findOneById(bookId);
         String token = authorization.substring(7);
         String userIdFromToken = jwtUtils.extractUserId(token);
         if (userIdFromToken.equals(userId.toString())) {
@@ -88,24 +94,24 @@ public class TransactionServiceImpl implements TransactionService {
         String token = authorization.substring(7);
         String userIdFromToken = jwtUtils.extractUserId(token);
         if (foundTransaction != null) {
-            Book foundBook = bookRepository.findById(foundTransaction.getBook()).orElse(null);
-            User foundUser = userRepository.findById(foundTransaction.getUser()).orElse(null);
+            Book foundBook = bookService.findOneById(foundTransaction.getBook());
+            User foundUser = userService.findOneById(foundTransaction.getUser());
             if (foundUser != null) {
                 String userId = foundUser.getId().toString();
                 if (userIdFromToken.equals(userId)) {
                     foundTransaction.setReturned(true);
                     foundTransaction.setReturnDate(new Date());
-                    System.out.println("returned transaction"+ foundTransaction);
                     transactionRepository.save(foundTransaction);
                     if (foundBook != null) {
                         foundBook.setAvailable(true);
                         bookRepository.save(foundBook);
-                        System.out.println("book available"+ foundBook);
+                    } else {
+                        throw new BookNotFoundException();
                     }
-                } else {
-                    throw new RuntimeException("Not allowed");
                 }
             }
+        } else {
+            throw new TransactionNotFoundException();
         }
     }
 
@@ -113,6 +119,9 @@ public class TransactionServiceImpl implements TransactionService {
     public void deleteOne(UUID transactionId) {
         Transaction foundTransaction =  transactionRepository.findById(transactionId).orElse(null);
         if(foundTransaction != null){
+            if(!foundTransaction.isReturned()){
+                throw new TransactionCannotBeDeletedException();
+            }
             transactionRepository.deleteById(transactionId);
         } else {
             throw new TransactionNotFoundException();

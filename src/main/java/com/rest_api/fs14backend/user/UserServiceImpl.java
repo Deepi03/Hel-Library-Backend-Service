@@ -1,5 +1,6 @@
 package com.rest_api.fs14backend.user;
 
+import com.rest_api.fs14backend.exceptions.User.UserBadInputRequestException;
 import com.rest_api.fs14backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,8 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String singUp(User user) {
         User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), User.Role.USER);
-        userRepository.save(newUser);
-        return "User Created Successfully";
-
+            userRepository.save(newUser);
+            return "User Created Successfully";
     }
 }

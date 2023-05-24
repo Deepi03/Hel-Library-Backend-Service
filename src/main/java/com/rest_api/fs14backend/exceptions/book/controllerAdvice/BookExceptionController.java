@@ -1,6 +1,6 @@
 package com.rest_api.fs14backend.exceptions.book.controllerAdvice;
 
-import com.rest_api.fs14backend.ExceptionEntity;
+import com.rest_api.fs14backend.ResponseEnt;
 import com.rest_api.fs14backend.exceptions.book.BookBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.book.BookCannotBeDeletedException;
 import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
@@ -16,28 +16,28 @@ public class BookExceptionController {
     @ExceptionHandler(value = BookNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
-    public ExceptionEntity handleNotFound(BookNotFoundException exception) {
-        return new ExceptionEntity( HttpStatus.NOT_FOUND.value(),exception.getMessage());
+    public ResponseEnt handleNotFound(BookNotFoundException exception) {
+        return new ResponseEnt( HttpStatus.NOT_FOUND.value(),exception.getMessage());
     }
 
     @ExceptionHandler(value = BookBadInputRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ExceptionEntity handleBadInputRequest(BookBadInputRequestException authorBadInputRequestException) {
-        return new ExceptionEntity( HttpStatus.BAD_REQUEST.value(), authorBadInputRequestException.getMessage());
+    public ResponseEnt handleBadInputRequest(BookBadInputRequestException bookBadInputRequestException) {
+        return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), bookBadInputRequestException.getMessage());
     }
 
     @ExceptionHandler(value = BookCannotBeDeletedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ExceptionEntity handleCannotDelete(BookCannotBeDeletedException authorCannotBeDeletedException) {
-        return new ExceptionEntity( HttpStatus.BAD_REQUEST.value(), authorCannotBeDeletedException.getMessage());
+    public ResponseEnt handleCannotDelete(BookCannotBeDeletedException bookCannotBeDeletedException) {
+        return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), bookCannotBeDeletedException.getMessage());
     }
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ExceptionEntity handleMismatchException(MethodArgumentTypeMismatchException methodArgumentTypeMismatchException) {
-        return new ExceptionEntity( HttpStatus.BAD_REQUEST.value(), methodArgumentTypeMismatchException.getMessage());
+    public ResponseEnt handleMismatchException(MethodArgumentTypeMismatchException methodArgumentTypeMismatchException) {
+        return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), methodArgumentTypeMismatchException.getMessage());
     }
 
 }

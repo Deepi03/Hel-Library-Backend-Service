@@ -5,6 +5,7 @@ import com.rest_api.fs14backend.author.AuthorService;
 import com.rest_api.fs14backend.book.Book;
 import com.rest_api.fs14backend.book.BookDto;
 import com.rest_api.fs14backend.book.BookService;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.author.AuthorBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
 import com.rest_api.fs14backend.exceptions.book.BookBadInputRequestException;
@@ -50,7 +51,6 @@ public class AdminController {
         } catch (DataIntegrityViolationException e){
             throw new AuthorBadInputRequestException();
         }
-
     }
 
     @PutMapping("/updateAuthor/{authorId}")
@@ -66,8 +66,6 @@ public class AdminController {
         } catch (DataIntegrityViolationException e){
             throw new AuthorBadInputRequestException();
         }
-
-
     }
     @DeleteMapping("/deleteAuthor/{authorId}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable UUID authorId) {
@@ -76,7 +74,6 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (DataIntegrityViolationException e) {
             throw new AuthorBadInputRequestException();
-
         }
     }
 
@@ -94,7 +91,6 @@ public class AdminController {
 
     @PutMapping("/updateBook/{bookId}")
     public  ResponseEntity<Book> updateBookById(@PathVariable UUID bookId,@RequestBody BookDto bookDto){
-
         try{
             Book updatedBook = bookService.updateOneById(bookId,bookDto);
             if(updatedBook == null )
@@ -180,5 +176,13 @@ public class AdminController {
         }
     }
 
-
+    @DeleteMapping("/deleteTransaction/{transactionId}")
+    public ResponseEntity<String> deleteTransactionById(@PathVariable UUID transactionId) {
+        try {
+            transactionService.deleteOne(transactionId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            throw new TransactionBadInputRequestException();
+        }
+    }
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ExceptionEntity {
+public class ResponseEnt {
     int statusCode;
     String message;
 }
