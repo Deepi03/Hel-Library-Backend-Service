@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/authors/")
-@CrossOrigin("http://localhost:5173/authors")
 public class AuthorController {
     @Autowired
     private AuthorService authorService;

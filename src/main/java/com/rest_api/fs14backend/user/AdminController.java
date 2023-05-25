@@ -5,6 +5,8 @@ import com.rest_api.fs14backend.author.AuthorService;
 import com.rest_api.fs14backend.book.Book;
 import com.rest_api.fs14backend.book.BookDto;
 import com.rest_api.fs14backend.book.BookService;
+import com.rest_api.fs14backend.exceptions.Genre.GenreBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.Genre.GenreNotFoundException;
 import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.author.AuthorBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
@@ -43,7 +45,7 @@ public class AdminController {
     TransactionService transactionService;
 
     /** ==== Author === **/
-    @PostMapping("/addAuthor")
+    @PostMapping("/authors")
     public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         try{
             Author createdAuthor = authorService.createOne(author);
@@ -53,7 +55,7 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/updateAuthor/{authorId}")
+    @PutMapping("/authors/{authorId}")
     public ResponseEntity<Author> updateAuthorById(@PathVariable UUID authorId,
                                                    @RequestBody Author author) {
         try{
@@ -67,7 +69,7 @@ public class AdminController {
             throw new AuthorBadInputRequestException();
         }
     }
-    @DeleteMapping("/deleteAuthor/{authorId}")
+    @DeleteMapping("/authors/{authorId}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable UUID authorId) {
         try {
             authorService.deleteOne(authorId);
@@ -79,7 +81,7 @@ public class AdminController {
 
     /** ==== Book === **/
 
-    @PostMapping("/addBook")
+    @PostMapping("/books")
     public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
         try{
             Book createdBook = bookService.createOne(bookDto);
@@ -89,7 +91,7 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/updateBook/{bookId}")
+    @PutMapping("/books/{bookId}")
     public  ResponseEntity<Book> updateBookById(@PathVariable UUID bookId,@RequestBody BookDto bookDto){
         try{
             Book updatedBook = bookService.updateOneById(bookId,bookDto);
@@ -103,7 +105,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/deleteBook/{bookId}")
+    @DeleteMapping("/books/{bookId}")
     public ResponseEntity<String> deleteBookId(@PathVariable UUID bookId) {
         try {
             bookService.deleteOneById(bookId);
@@ -115,39 +117,38 @@ public class AdminController {
 
     /** ==== Genre === **/
 
-    @PostMapping("/addGenre")
+    @PostMapping("/genres")
     public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
         try{
             Genre createdGenre = genreService.createOne(genre);
             return new ResponseEntity<>(createdGenre,HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new GenreBadInputRequestException();
         }
     }
 
-    @PutMapping("/updateGenre/{genreId}")
+    @PutMapping("/genres/{genreId}")
     public ResponseEntity<Genre> updateGenreById(@PathVariable UUID genreId,@RequestBody Genre genre) {
         try{
             Genre updatedGenre = genreService.updateOne(genreId,genre);
-            return updatedGenre != null ? new ResponseEntity<>(updatedGenre,HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if(updatedGenre == null )
+            {
+                throw new GenreNotFoundException();
+            }
+            return  new ResponseEntity<>(updatedGenre,HttpStatus.OK);
         }
         catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new GenreBadInputRequestException();
         }
     }
 
-    @DeleteMapping("/deleteGenre/{genreId}")
+    @DeleteMapping("/genres/{genreId}")
     public ResponseEntity<String> deleteGenreById(@PathVariable UUID genreId) {
         try{
             genreService.deleteOne(genreId);
             return new ResponseEntity<>("Genre deleted",HttpStatus.OK);
-        } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            throw new GenreBadInputRequestException();
         }
 
     }
@@ -165,7 +166,7 @@ public class AdminController {
     }
 
     /** ==== Transactions === **/
-    @GetMapping("/allTransactions")
+    @GetMapping("/transactions")
     public ResponseEntity<List<Transaction>> getAllTransaction(){
         try {
             List<Transaction> transactions =  transactionService.findAll();
@@ -176,7 +177,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/deleteTransaction/{transactionId}")
+    @DeleteMapping("/transactions/{transactionId}")
     public ResponseEntity<String> deleteTransactionById(@PathVariable UUID transactionId) {
         try {
             transactionService.deleteOne(transactionId);
