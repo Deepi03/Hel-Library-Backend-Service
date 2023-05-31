@@ -87,8 +87,13 @@ public class AdminController {
             Book createdBook = bookService.createOne(bookDto);
             return new ResponseEntity<>(createdBook,HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e){
+            System.out.println("e ####"+e);
             throw new BookBadInputRequestException();
+        }catch (Exception e){
+            System.out.println("e ####"+e);
+            return null;
         }
+
     }
 
     @PutMapping("/books/{bookId}")

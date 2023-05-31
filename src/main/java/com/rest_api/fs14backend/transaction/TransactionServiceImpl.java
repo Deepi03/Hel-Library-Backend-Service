@@ -1,13 +1,9 @@
 package com.rest_api.fs14backend.transaction;
 
 
-import com.rest_api.fs14backend.author.Author;
 import com.rest_api.fs14backend.book.BookService;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
 import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeDeletedException;
 import com.rest_api.fs14backend.exceptions.Transaction.TransactionNotFoundException;
-import com.rest_api.fs14backend.exceptions.author.AuthorCannotBeDeletedException;
-import com.rest_api.fs14backend.exceptions.author.AuthorNotFoundException;
 import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
 import com.rest_api.fs14backend.user.UserService;
 import com.rest_api.fs14backend.utils.JwtUtils;
@@ -23,7 +19,6 @@ import java.util.UUID;
 import com.rest_api.fs14backend.book.Book;
 import com.rest_api.fs14backend.book.BookRepository;
 import com.rest_api.fs14backend.user.User;
-import com.rest_api.fs14backend.user.UserRepository;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -44,7 +39,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> findAll() {
-        return transactionRepository.findAll();
+            return transactionRepository.findAll();
     }
 
     @Override

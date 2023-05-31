@@ -62,7 +62,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAllByGenreId(UUID genreId) {
-        List<Book> books =  bookRepository.findAllByAuthorId(genreId);
+        List<Book> books =  bookRepository.findAllByGenreId(genreId);
         if(books.size() <= 0){
             throw new BookNotFoundException();
         }

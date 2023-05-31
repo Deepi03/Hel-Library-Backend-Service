@@ -1,4 +1,4 @@
-package com.rest_api.fs14backend.securityConfig;
+package com.rest_api.fs14backend.config;
 
 import com.rest_api.fs14backend.filters.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("GET", "/api/v1/books/*").permitAll()
                 .requestMatchers("GET", "/api/v1/authors/*").permitAll()
+                .requestMatchers("/swagger-ui/**","/swagger-ui.html","/","/v3/api-docs/**").permitAll()
                 .requestMatchers("GET", "/api/v1/genres/*").permitAll()
                 .requestMatchers("GET", "/api/v1/books/authors/*").permitAll()
                 .requestMatchers("GET", "/api/v1/books/genres/*").permitAll()

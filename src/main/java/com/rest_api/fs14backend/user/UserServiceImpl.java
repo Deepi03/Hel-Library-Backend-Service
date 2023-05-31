@@ -1,6 +1,5 @@
 package com.rest_api.fs14backend.user;
 
-import com.rest_api.fs14backend.exceptions.User.UserBadInputRequestException;
 import com.rest_api.fs14backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,14 +22,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+
 
     @Override
     public User findOneById(UUID userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public List<User> findAll() {
+            return userRepository.findAll();
+
     }
 
     @Override
