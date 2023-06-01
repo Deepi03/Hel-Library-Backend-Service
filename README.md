@@ -23,18 +23,19 @@
 #### To start the service:
     
 ##### Command prompt:
-    `net start postgrsql`
+
+`net start postgrsql`
 
 OR
 
 ##### Terminal:
-    `brew services restart postgresql@14`
+`brew services restart postgresql@14`
 ##### Connect DB
-    `psql -U postgres`
+`psql -U postgres`
 
 ## Build and Run
   ### API
-    `mvn spring-boot run`
+`mvn spring-boot:run`
 
 ============================================
 
