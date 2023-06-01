@@ -759,6 +759,13 @@ Response : `[
 ]`
 
 
+### Future plan
+ 
+  * more clean code with good documentation(Swagger documentation)
+  * Better endpoints which follows REST API constraints and architecture
+  * Better validations and exception handling
+  * As there is no space for unit testing , planning to implement integration and e2e testing
+
 
 
 
