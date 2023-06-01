@@ -1,5 +1,12 @@
 # Hel Online Library API
 
+Live Service
+
+#### Get all books
+`https://hel-library-web-service.onrender.com/api/v1/books/`
+
+
+
 #### This application does the following
 
     * All Users can see the books , genres and authors
@@ -46,7 +53,10 @@ OR
 ### Get Books
 ##### Method: GET
 URL:
-    `http://localhost:8080/api/v1/books/`
+
+  local host:  `http://localhost:8080/api/v1/books/`
+
+  live :`https://hel-library-web-service.onrender.com/api/v1/books/`
 
 Response : `
 [
@@ -79,7 +89,10 @@ Response : `
 ##### Method: GET
 
 URL:
-    `http://localhost:8080/api/v1/books/${bookId}`
+
+   localhost :  `http://localhost:8080/api/v1/books/${bookId}`
+
+   live :  `https://hel-library-web-service.onrender.com/api/v1/books/${bookId}`
 
 Response : `{
 "id": "d22eb419-868e-4c9a-b5eb-a54bbbae524c",
@@ -97,8 +110,11 @@ Response : `{
 ### Create Book (Role : ADMIN)
 ##### Method: POST
 URL:
-`http://localhost:8080/api/v1/admin/books`
 
+localhost :`http://localhost:8080/api/v1/admin/books`
+
+
+live :`https://hel-library-web-service.onrender.com/api/v1/admin/books`
 Header : `Bearer Token`
 
 Request Body :
@@ -145,7 +161,11 @@ OR
 ##### Method: PUT
 
 URL:
-`http://localhost:8080/api/v1/admin/books/${bookId}`
+
+ localhost : `http://localhost:8080/api/v1/admin/books/${bookId}`
+
+
+ live :`https://hel-library-web-service.onrender.com/api/v1/admin/books/${bookId}`
 
 Header : `Bearer Token`
 
@@ -194,7 +214,11 @@ OR
 ##### Method: Delete
 
 URL:
-`http://localhost:8080/api/v1/admin/books/${bookId}/`
+
+
+localhost : `http://localhost:8080/api/v1/admin/books/${bookId}/`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/admin/books/${bookId}`
 
 Response : 200 ok
 
@@ -214,7 +238,11 @@ or
 ##### Method: GET
 
 URL:
-    `http://localhost:8080/api/v1/authors/`
+
+
+live:`http://localhost:8080/api/v1/authors/`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/authors/`
 
 Response  : `[
 {
@@ -234,7 +262,10 @@ Response  : `[
 ##### Method: GET
 
 URL:
-    `http://localhost:8080/api/v1/authors/${authorId}`
+
+localhost: `http://localhost:8080/api/v1/authors/${authorId}`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/authors/${authorId}`
 
 Response : 
 `
@@ -248,7 +279,11 @@ Response :
 ### Create Author (Role : ADMIN)
 #### Method: POST
 URL:
-`http://localhost:8080/api/v1/admin/authors`
+
+
+localhost:`http://localhost:8080/api/v1/admin/authors`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/admin/authors`
 
 Header : `Bearer Token`
 
@@ -281,7 +316,11 @@ OR
 ### Update Author (Role : ADMIN)
 #### Method: PUT
 URL:
-`http://localhost:8080/api/v1/admin/authors/${authorId}`
+
+
+localhost:`http://localhost:8080/api/v1/admin/authors/${authorId}`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/admin/authors/${authorsId}`
 
 Header : `Bearer Token`
 
@@ -316,7 +355,11 @@ OR
 ##### Method: Delete
 
 URL:
-`http://localhost:8080/api/v1/admin/authors/${authorId}/`
+
+
+localhost:`http://localhost:8080/api/v1/admin/authors/${authorId}`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/admin/authors/${authorId}`
 
 Response : 200 ok
 
@@ -337,7 +380,10 @@ or
 ##### Method: GET
 
 URL:
-    `http://localhost:8080/api/v1/genres/`
+localhost:`http://localhost:8080/api/v1/genres/`
+
+
+live :`https://hel-library-web-service.onrender.com/api/v1/genres/`
 
 Response : `[
 {
@@ -357,7 +403,11 @@ Response : `[
 ##### Method: GET
 
 URL:
-`http://localhost:8080/api/v1/genres/${genreId}`
+
+
+localhost:`http://localhost:8080/api/v1/genres/${genreId}`
+
+live :`https://hel-library-web-service.onrender.com/api/v1/genres/${genreId}`
 
 Response : `{
 "id": "ada0114a-f706-4d78-a2ec-1f437331f2e4",
@@ -370,26 +420,30 @@ Response : `{
 #### Method : POST
 
 URL:
-`http://localhost:8080/api/v1/admin/genres`
+
+
+localhost:`http://localhost:8080/api/v1/admin/genres`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/admin/genres`
 
 Header : `Bearer Token`
 
 Request Body :
 `
-{
-String name;
-String description;
-String coverImage;
+{ 
+name:"History",
+description:" fvdv fdvdfvdfbvdf",
+coverImage:"https://fastly.picsum.photos/id/287/200/300.jpg?hmac=9JSSeZMseJ8l_WTFAMmF3HXoyYmKFzQxmagpyWBefTA",
 }`
 
 Response :
 
 `
 {
-"id":genre id"
-"name":"genre name";
-"coverImage":"image link";
-"description":"genre description";
+id:"cfdavdfavdfv",
+name:"History",
+description:" fvdv fdvdfvdfbvdf",
+coverImage:"https://fastly.picsum.photos/id/287/200/300.jpg?hmac=9JSSeZMseJ8l_WTFAMmF3HXoyYmKFzQxmagpyWBefTA",
 }`
 
 
@@ -407,7 +461,11 @@ OR
 ##### Method: PUT
 
 URL:
-`http://localhost:8080/api/v1/admin/genres/${genreId}`
+
+
+localhost:`http://localhost:8080/api/v1/admin/genres/${genreId}`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/admin/genres/${genreId}`
 
 Header : `Bearer Token`
 
@@ -442,7 +500,11 @@ OR
 ##### Method: Delete
 
 URL:
-`http://localhost:8080/api/v1/admin/genres/{genreId}/`
+
+
+localhost:`http://localhost:8080/api/v1/admin/genres/{genreId}`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/admin/genres`/${genreId}
 
 Response : 200 ok
 
@@ -461,7 +523,11 @@ or
 ### Borrow Book (Role : ADMIN)
 ##### Method: POST
 URL:
-`http://localhost:8080/api/v1/transactions/borrow`
+
+
+localhost:`http://localhost:8080/api/v1/transactions/borrow`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/transactions/borrow`
 
 Header : `Bearer Token`
 
@@ -499,7 +565,11 @@ OR
 ##### Method: GET
 
 URL:
-`http://localhost:8080/api/v1/transactions/return/${transactionId}`
+
+
+localhost:`http://localhost:8080/api/v1/transactions/return/${transactionId}`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/transactions/return/${transactionId}`
 
 Header : `Bearer Token`
 
@@ -510,7 +580,11 @@ Response : Book returned
 ##### Method: GET
 
 URL:
-`http://localhost:8080/api/v1/admin/transactions`
+
+
+localhost:`http://localhost:8080/api/v1/admin/transactions`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/admin/transactions
 
 Header : `Bearer Token`
 
@@ -539,7 +613,11 @@ Response :
 ##### Method: GET
 
 URL:
-`http://localhost:8080/api/v1/transactions/user/${userId}`
+
+
+localhost:`http://localhost:8080/api/v1/transactions/user/${userId}`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/transactions/user/${userId}`
 
 Header : `Bearer Token`
 
@@ -565,7 +643,12 @@ Response :
 ##### Method: Delete
 
 URL:
-`http://localhost:8080/api/v1/admin/transactions{authorId}/`
+
+
+localhost:`http://localhost:8080/api/v1/admin/transactions/${transactionId}`
+
+
+live:`https://hel-library-web-service.onrender.com/api/v1/admin/transactions/${transactionId}`
 
 Response : 200 ok
 
@@ -584,7 +667,12 @@ or
 ### Sing Up
 ##### Method: POST
 URL:
-`localhost:8080/api/v1/users/signup`
+
+
+localhost: `http://localhost:8080/api/v1/users/signup`
+
+
+live: `https://hel-library-web-service.onrender.com/api/v1/users/signup`
 
 
 Request Body :
@@ -615,7 +703,11 @@ OR
 
 
 URL:
-`localhost:8080/api/v1/users/signin`
+
+
+localhost: `http://localhost:8080/api/v1/users/signin`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/users/signin`
 
 
 Request Body :
@@ -646,7 +738,9 @@ OR
 ##### Method: GET
 
 URL:
-`http://localhost:8080/api/v1/admin/users`
+localhost: `http://localhost:8080/api/v1/admin/users`
+
+live:`https://hel-library-web-service.onrender.com/api/v1/admin/users`
 
 Header : `Bearer Token`
 
