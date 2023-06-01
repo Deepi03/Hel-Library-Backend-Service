@@ -23,17 +23,32 @@ public class UserServiceImpl implements UserService {
     private JwtUtils jwtUtils;
 
 
+    /**
+     *
+     * @param userId
+     * @return user which matches given id
+     */
 
     @Override
     public User findOneById(UUID userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
+    /**
+     *
+     * @return list of all users
+     */
     @Override
     public List<User> findAll() {
             return userRepository.findAll();
 
     }
+
+    /**
+     *
+     * @param authRequest
+     * @return token
+     */
 
     @Override
     public AuthResponse login(AuthRequest authRequest) {
@@ -44,6 +59,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(authRequest.getUsername());
         return new AuthResponse(jwtUtils.generateToken(user)) ;
     }
+
+    /**
+     *
+     * @param user
+     * @return response string
+     */
 
     @Override
     public String singUp(User user) {

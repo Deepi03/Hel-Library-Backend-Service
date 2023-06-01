@@ -19,6 +19,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    /**
+     *
+     * @param user
+     * @return response string
+     */
     @PostMapping("/signup")
     public ResponseEnt singUp(@RequestBody User user) {
         try{
@@ -30,6 +35,12 @@ public class UserController {
         }
     }
 
+    /**
+     *
+     * @param authRequest
+     * @return token
+     */
+
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest){
         try{
@@ -40,6 +51,12 @@ public class UserController {
         }
 
     }
+
+    /**
+     *
+     * @param userId
+     * @return user which matches given id
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<User> findByUserId(@PathVariable UUID userId) {
         try{

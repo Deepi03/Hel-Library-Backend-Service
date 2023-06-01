@@ -18,20 +18,45 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private BookRepository bookRepository;
 
+    /**
+     *
+     * @return list of all authors
+     */
     @Override
     public List<Author> findAll() {
         return authorRepository.findAll();
     }
+
+    /**
+     *
+     * @param authorId
+     * @return author which matches given id
+     */
+
+    @Override
+    public Author findOneById(UUID authorId) {
+        return authorRepository.findById(authorId).orElse(null);
+    }
+
+
+    /**
+     *
+     * @param author
+     * @return created author
+     */
 
     @Override
     public Author createOne(Author author) {
         return authorRepository.save(author);
     }
 
-    @Override
-    public Author findOneById(UUID authorId) {
-        return authorRepository.findById(authorId).orElse(null);
-    }
+
+    /**
+     *
+     * @param authorId
+     * @param author
+     * @return updated author
+     */
 
     @Override
     public Author updateOne(UUID authorId, Author author) {
@@ -44,6 +69,11 @@ public class AuthorServiceImpl implements AuthorService {
         }
         return null;
     }
+
+    /**
+     *
+     * @param authorId
+     */
 
     @Override
     public void deleteOne(UUID authorId) {

@@ -19,7 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 
 @Configuration
-public class SecurityConfig {
+    public class SecurityConfig {
 
     @Autowired
     private JwtFilter jwtFilter;

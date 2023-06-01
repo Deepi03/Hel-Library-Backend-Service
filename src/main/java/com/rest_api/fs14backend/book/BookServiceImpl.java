@@ -31,6 +31,10 @@ public class BookServiceImpl implements BookService {
     @Autowired
     TransactionRepository transactionRepository;
 
+    /**
+     *
+     * @return list all books
+     */
     @Override
     public List<Book> findAll() {
         List<Book> books =  bookRepository.findAll();
@@ -41,6 +45,11 @@ public class BookServiceImpl implements BookService {
        }
     }
 
+    /**
+     *
+     * @param id
+     * @return book which matches given id
+     */
     @Override
     public Book findOneById(UUID id) {
         Book foundBook = bookRepository.findById(id).orElse(null);
@@ -51,6 +60,12 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     *
+     * @param authorId
+     * @return list of all books which matches given author id
+     */
+
     @Override
     public List<Book> findAllByAuthorId(UUID authorId) {
         List<Book> books =  bookRepository.findAllByAuthorId(authorId);
@@ -60,6 +75,12 @@ public class BookServiceImpl implements BookService {
         return books;
     }
 
+    /**
+     *
+     * @param genreId
+     * @return list of all books which matches given genre id
+     */
+
     @Override
     public List<Book> findAllByGenreId(UUID genreId) {
         List<Book> books =  bookRepository.findAllByGenreId(genreId);
@@ -68,6 +89,12 @@ public class BookServiceImpl implements BookService {
         }
         return books;
     }
+
+    /**
+     *
+     * @param bookDto
+     * @return created book
+     */
 
     @Override
     public Book createOne(BookDto bookDto) {
@@ -79,6 +106,12 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(newBook);
     }
 
+    /**
+     *
+     * @param id
+     * @param bookDto
+     * @return updated book
+     */
     @Override
     public Book updateOneById(UUID id, BookDto bookDto) {
         Book foundBook = bookRepository.findById(id).orElse(null);
@@ -101,6 +134,11 @@ public class BookServiceImpl implements BookService {
         }
         return null;
     }
+
+    /**
+     *
+     * @param bookId
+     */
 
     @Override
     public void deleteOneById(UUID bookId) {

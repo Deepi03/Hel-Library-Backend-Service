@@ -37,11 +37,22 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private JwtUtils jwtUtils;
 
+
+    /**
+     *
+     * @return list of transactions
+     */
     @Override
     public List<Transaction> findAll() {
             return transactionRepository.findAll();
     }
 
+    /**
+     *
+     * @param userId
+     * @param authorization
+     * @return  list of transactions which matches the given user id
+     */
     @Override
     public List<Transaction> findAllByUserId(UUID userId, String authorization) {
         String token = authorization.substring(7);
@@ -52,10 +63,22 @@ public class TransactionServiceImpl implements TransactionService {
         return null;
     }
 
+    /**
+     *
+     * @param bookId
+     * @return list of transactions which matches given book id
+     */
     @Override
     public List<Transaction> findAllByBookId(UUID bookId) {
         return transactionRepository.findAllByBookId(bookId);
     }
+
+    /**
+     *
+     * @param borrowDto
+     * @param authorization
+     * @return created transaction
+     */
     @Override
     public Transaction borrowBook(BorrowDto borrowDto, String authorization)  {
         UUID userId = borrowDto.getUserId();
@@ -82,6 +105,12 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return null;
     }
+
+    /**
+     *
+     * @param transactionId
+     * @param authorization
+     */
 
     @Override
     public void returnBook(UUID transactionId, String authorization) {
@@ -110,6 +139,11 @@ public class TransactionServiceImpl implements TransactionService {
         }
     }
 
+    /**
+     *
+     * @param transactionId
+     */
+
     @Override
     public void deleteOne(UUID transactionId) {
         Transaction foundTransaction =  transactionRepository.findById(transactionId).orElse(null);
@@ -123,9 +157,20 @@ public class TransactionServiceImpl implements TransactionService {
         }
     }
 
+    /**
+     *
+     * @param localDateTime
+     * @return converted local date
+     */
     private Date convertLocalDateTimeToDateUsingTimestamp(LocalDateTime localDateTime) {
         return Timestamp.valueOf(localDateTime);
     }
+
+    /**
+     *
+     * @param days
+     * @return matched date
+     */
 
     private Date toBeReturnedDate(String days) {
         Date today = new Date();

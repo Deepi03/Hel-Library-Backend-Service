@@ -45,6 +45,11 @@ public class AdminController {
     TransactionService transactionService;
 
     /** ==== Author === **/
+    /**
+     *
+     * @param author
+     * @return created author
+     */
     @PostMapping("/authors")
     public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         try{
@@ -54,6 +59,13 @@ public class AdminController {
             throw new AuthorBadInputRequestException();
         }
     }
+
+    /**
+     *
+     * @param authorId
+     * @param author
+     * @return update author
+     */
 
     @PutMapping("/authors/{authorId}")
     public ResponseEntity<Author> updateAuthorById(@PathVariable UUID authorId,
@@ -69,6 +81,12 @@ public class AdminController {
             throw new AuthorBadInputRequestException();
         }
     }
+
+    /**
+     *
+      * @param authorId
+     * @return response string
+     */
     @DeleteMapping("/authors/{authorId}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable UUID authorId) {
         try {
@@ -81,6 +99,11 @@ public class AdminController {
 
     /** ==== Book === **/
 
+    /**
+     *
+     * @param bookDto
+     * @return created book
+     */
     @PostMapping("/books")
     public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
         try{
@@ -96,6 +119,13 @@ public class AdminController {
 
     }
 
+    /**
+     *
+     * @param bookId
+     * @param bookDto
+     * @return updated book
+     */
+
     @PutMapping("/books/{bookId}")
     public  ResponseEntity<Book> updateBookById(@PathVariable UUID bookId,@RequestBody BookDto bookDto){
         try{
@@ -110,6 +140,12 @@ public class AdminController {
         }
     }
 
+    /**
+     *
+     * @param bookId
+     * @return resposne string
+     */
+
     @DeleteMapping("/books/{bookId}")
     public ResponseEntity<String> deleteBookId(@PathVariable UUID bookId) {
         try {
@@ -122,6 +158,11 @@ public class AdminController {
 
     /** ==== Genre === **/
 
+    /**
+     *
+     * @param genre
+     * @return created genre
+     */
     @PostMapping("/genres")
     public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
         try{
@@ -131,6 +172,13 @@ public class AdminController {
             throw new GenreBadInputRequestException();
         }
     }
+
+    /**
+     *
+     * @param genreId
+     * @param genre
+     * @return updated genre
+     */
 
     @PutMapping("/genres/{genreId}")
     public ResponseEntity<Genre> updateGenreById(@PathVariable UUID genreId,@RequestBody Genre genre) {
@@ -147,6 +195,12 @@ public class AdminController {
         }
     }
 
+    /**
+     *
+     * @param genreId
+     * @return response string
+     */
+
     @DeleteMapping("/genres/{genreId}")
     public ResponseEntity<String> deleteGenreById(@PathVariable UUID genreId) {
         try{
@@ -158,7 +212,14 @@ public class AdminController {
 
     }
 
+
+
     /** ==== Users === **/
+
+    /**
+     *
+     * @return list of all users
+     */
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
@@ -171,6 +232,11 @@ public class AdminController {
     }
 
     /** ==== Transactions === **/
+
+    /**
+     *
+     * @return list of all transactions
+     */
     @GetMapping("/transactions")
     public ResponseEntity<List<Transaction>> getAllTransaction(){
         try {
@@ -181,6 +247,12 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     *
+     * @param transactionId
+     * @return response string
+     */
 
     @DeleteMapping("/transactions/{transactionId}")
     public ResponseEntity<String> deleteTransactionById(@PathVariable UUID transactionId) {

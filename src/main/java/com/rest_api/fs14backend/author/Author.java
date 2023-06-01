@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import java.util.UUID;
 
+
 @Entity
 @Table(name="authors")
 @NoArgsConstructor

@@ -1,6 +1,8 @@
 package com.rest_api.fs14backend.transaction;
 
 
+import com.rest_api.fs14backend.exceptions.Genre.GenreBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,12 @@ public class TransactionController {
     TransactionService transactionService;
 
 
+    /**
+     *
+     * @param userId
+     * @param authorization
+     * @return list of transactions
+     */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Transaction>> getTransactionsByUserId(@PathVariable UUID userId, @RequestHeader String authorization) {
         try {
@@ -32,32 +40,36 @@ public class TransactionController {
     }
 
     /**
-     * Borrow Book
-     **/
+     *
+     * @param borrowDto
+     * @param authorization
+     * @return created transaction
+     */
     @PostMapping("/borrow")
     public ResponseEntity<Transaction> createTransaction
     (@RequestBody BorrowDto borrowDto, @RequestHeader String authorization) {
         try{
             Transaction createdTransaction  = transactionService.borrowBook(borrowDto, authorization);
-            return new ResponseEntity<>(createdTransaction,HttpStatus.OK);
-        }catch (DataIntegrityViolationException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(createdTransaction,HttpStatus.CREATED);
+        }  catch (Exception e){
+            throw new TransactionBadInputRequestException();
         }
     }
 
+    /**
+     *
+     * @param transactionId
+     * @param authorization
+     * @return response string
+     */
     @GetMapping("/return/{transactionId}")
     public ResponseEntity<String> updateTransaction(@PathVariable UUID transactionId, @RequestHeader String authorization) {
         try {
             transactionService.returnBook(transactionId, authorization);
-            return new ResponseEntity<>("Book returned", HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return new ResponseEntity<>("Book returned", HttpStatus.OK);}
+        catch (Exception e){
+                throw new TransactionBadInputRequestException();
+            }
     }
 
 }

@@ -21,20 +21,42 @@ public class GenreServiceImpl implements GenreService {
     @Autowired
     private BookRepository bookRepository;
 
+    /**
+     *
+     * @return list of genres
+     */
     @Override
     public List<Genre> findAll() {
         return genreRepository.findAll();
     }
 
+    /**
+     *
+     * @param genreId
+     * @return genre which matches the given id
+     */
     @Override
     public Genre findOneById(UUID genreId) {
         return genreRepository.findById(genreId).orElse(null);
     }
 
+    /**
+     *
+     * @param genre
+     * @return created genre
+     */
+
     @Override
     public Genre createOne(Genre genre) {
         return genreRepository.save(genre);
     }
+
+    /**
+     *
+     * @param genreId
+     * @param genre
+     * @return updated genre
+     */
 
     @Override
     public Genre updateOne(UUID genreId, @RequestBody Genre genre) {
@@ -47,6 +69,11 @@ public class GenreServiceImpl implements GenreService {
         }
         return null;
     }
+
+    /**
+     *
+     * @param genreId
+     */
 
     @Override
     public void deleteOne(UUID genreId) {

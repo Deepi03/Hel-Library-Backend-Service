@@ -13,6 +13,11 @@ import java.util.UUID;
 public class AuthorController {
     @Autowired
     private AuthorService authorService;
+
+    /**
+     *
+     * @return list of all authors
+     */
     @GetMapping()
     public ResponseEntity<List<Author>> getAllAuthors() {
         try {
@@ -23,6 +28,12 @@ public class AuthorController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     *
+     * @param authorId
+     * @return author which matches given id
+     */
     @GetMapping("/{authorId}")
     public ResponseEntity<Author> findAuthorById(@PathVariable UUID authorId) {
         try{

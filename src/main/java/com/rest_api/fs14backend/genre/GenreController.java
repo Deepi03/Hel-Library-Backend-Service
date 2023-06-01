@@ -15,6 +15,10 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
+    /**
+     *
+     * @return list of genres
+     */
     @GetMapping()
     public ResponseEntity<List<Genre>> getAllGenres() {
         try {
@@ -25,6 +29,12 @@ public class GenreController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     *
+     * @param genreId
+     * @return genre which matches given id
+     */
 
     @GetMapping("/{genreId}")
     public ResponseEntity<Genre> findGenreById(@PathVariable UUID genreId) {

@@ -19,11 +19,21 @@ public class BookController {
     @Autowired
     BookService bookService;
 
+    /**
+     *
+     * @return list of all books
+     */
     @GetMapping()
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> foundBooks = bookService.findAll();
         return  new ResponseEntity<>(foundBooks, HttpStatus.OK);
     }
+
+    /**
+     *
+     * @param bookId
+     * @return book which matches given id
+     */
 
     @GetMapping("{bookId}")
     public ResponseEntity<Book> findBookById(@PathVariable UUID bookId) {
@@ -31,11 +41,23 @@ public class BookController {
             return new ResponseEntity<>(foundBook,HttpStatus.OK) ;
     }
 
+    /**
+     *
+     * @param authorId
+     * @return list of all books which matches given author id
+     */
+
     @GetMapping("authors/{authorId}")
     public ResponseEntity<List<Book>> findBookByAuthorId(@PathVariable UUID authorId) {
             List<Book> foundBooks = bookService.findAllByAuthorId(authorId);
             return  new ResponseEntity<>(foundBooks, HttpStatus.OK);
     }
+
+    /**
+     *
+     * @param genreId
+     * @return list of all books which matches given genre id
+     */
 
     @GetMapping("genres/{genreId}")
     public ResponseEntity<List<Book>> findBooksByGenreId(@PathVariable UUID genreId) {
