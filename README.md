@@ -1,17 +1,11 @@
 # Hel Online Library API
 
+#### This application exposes following REST API endpoints
 
-#### Get all books
-`https://hel-library-web-service.onrender.com/api/v1/books/`
-
-
-
-#### This application does the following
-
-    * All Users can see the books , genres and authors
-    * Authenticated User can borrow books for 10,20 or 30 days,return books also user can see his/her transactions history 
-    * Authorised Admin can do basic CRUD operations such as Create,Read,Update and Delete books,authors ,genres 
-      as well as transactions.
+    * CRUD operations on books,authors,genres by authorised admin
+    * Fetch All books, genres and authors
+    * Borrow book/Return book endpoints
+    * Transaction history based on authorised admin/user
 
 ### What I learnt from this
     How to make good data model
@@ -19,33 +13,36 @@
     How to map java object modeling to database with hibernate
     How basic concepts of OOP works
     How to layer the backend code by splitting it to individual modules
+    
 ## Prerequisite
  #### Following tools required,
-    * Java 8 or greater
+    * Java 8 or higher
     * Maven 3
     * spring-boot 3.0.6
     * postgresql
-## Database connection commands
-#### To start the service:
     
-##### Command prompt:
+## Database connection commands
 
-`net start postgrsql`
-
-OR
+#### To start the service:
+Update `src/main/resources/application.properties` with appropriate connection parameters
 
 ##### Terminal:
-`brew services restart postgresql@14`
+`brew services start postgresql@14`
 ##### Connect DB
 `psql -U postgres`
 
+## To start application in local
+Run `git clone https://github.com/Deepi03/Hel-Library-Backend-Service.git`
+
+Run `mvn clean install`
 ## Build and Run
-  ### API
 `mvn spring-boot:run`
+
+service should start in `http://localhost:8080`
 
 ============================================
 
-## Using postman/insomnia
+## Test endpoints using postman/insomnia
 
 ## Book
 
