@@ -640,9 +640,9 @@ Header : `Bearer Token`
 
 ### Admin Credential can be requested to this email / linkedIn Dm
   
-     email : `deepirajsekar03@gmail.com`
+email : `deepirajsekar03@gmail.com`
 
-    LinkedIn profile : https://www.linkedin.com/in/deepika-rajasekar/
+LinkedIn profile : https://www.linkedin.com/in/deepika-rajasekar/
 
 
 
