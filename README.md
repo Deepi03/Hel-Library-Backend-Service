@@ -638,6 +638,11 @@ Header : `Bearer Token`
   * As there is no space for unit testing , planning to implement integration and e2e testing
 
 
+### Admin Credential can be requested to this email / linkedIn Dm
+  
+     email : `deepirajsekar03@gmail.com`
+
+    LinkedIn profile : https://www.linkedin.com/in/deepika-rajasekar/
 
 
 
