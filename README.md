@@ -54,33 +54,6 @@ URL:
 
   live :`https://hel-library-web-service.onrender.com/api/v1/books/`
 
-Response : `
-[
-{
-"id": "5a369ecf-c5c6-4c5a-8272-cb4e5f2a9f58",
-"title": "Kalevala",
-"isbn": "110366567-6",
-"author": "85e37ac3-66eb-47a4-89f5-b7ff7d8d3dc0",
-"genre": "db9f9b2e-669e-4fe3-a050-748a4cc3437d",
-"publishedDate": "1859-10-02T00:00:00.000+00:00",
-"publisher": "Kukkonen",
-"cover": "https://fastly.picsum.photos/id/187/200/300.jpg?hmac=RGKQU40hHnXm-pBoMbUE5TDcy26DLc6CdcqednFcmB0",
-"description": "The Kalevala (Finnish: Kalevala, IPA: [ˈkɑleʋɑlɑ]) is a 19th-century work of epic poetry compiled by Elias Lönnrot from Karelian and Finnish oral folklore and mythology,[1] telling an epic story about the Creation of the Earth, describing the controversies and retaliatory voyages between the peoples of the land of Kalevala called Väinölä and the land of Pohjola and their various protagonists and antagonists, as well as the construction and robbery of the epic mythical wealth-making machine Sampo.[2]",
-"available": true
-},
-{
-"id": "d22eb419-868e-4c9a-b5eb-a54bbbae524c",
-"title": "Living in Oblivion",
-"isbn": "703663487-1",
-"author": "b04ac11c-05bb-4dec-9fbc-b7c15c2dd4b4",
-"genre": "db9f9b2e-669e-4fe3-a050-748a4cc3437d",
-"publishedDate": "1959-10-02T00:00:00.000+00:00",
-"publisher": "Tobey Groocock",
-"cover": "https://fastly.picsum.photos/id/175/200/300.jpg?hmac=jzS4h5cKiC2EYjpW11ejlay_4MSHkmfCWei9e7n8cE0",
-"description": "The Adventures of Sherlock Holmes is a collection of twelve short stories by Arthur Conan Doyle, first published on 14 October 1892. It contains the earliest short stories featuring the consulting detective Sherlock Holmes, which had been published in twelve monthly issues of The Strand Magazine from July 1891 to June 1892. The stories are collected in the same sequence, which is not supported by any fictional chronology. The only characters common to all twelve are Holmes and Dr. Watson and all are related in first-person narrative from Watson's point of view.",
-"available": false
-}]`
-
 ### Get Single Book
 ##### Method: GET
 
@@ -90,18 +63,6 @@ URL:
 
    live :  `https://hel-library-web-service.onrender.com/api/v1/books/${bookId}`
 
-Response : `{
-"id": "d22eb419-868e-4c9a-b5eb-a54bbbae524c",
-"title": "Living in Oblivion",
-"isbn": "703663487-1",
-"author": "b04ac11c-05bb-4dec-9fbc-b7c15c2dd4b4",
-"genre": "db9f9b2e-669e-4fe3-a050-748a4cc3437d",
-"publishedDate": "1959-10-02T00:00:00.000+00:00",
-"publisher": "Tobey Groocock",
-"cover": "https://fastly.picsum.photos/id/175/200/300.jpg?hmac=jzS4h5cKiC2EYjpW11ejlay_4MSHkmfCWei9e7n8cE0",
-"description": "The Adventures of Sherlock Holmes is a collection of twelve short stories by Arthur Conan Doyle, first published on 14 October 1892. It contains the earliest short stories featuring the consulting detective Sherlock Holmes, which had been published in twelve monthly issues of The Strand Magazine from July 1891 to June 1892. The stories are collected in the same sequence, which is not supported by any fictional chronology. The only characters common to all twelve are Holmes and Dr. Watson and all are related in first-person narrative from Watson's point of view.",
-"available": false
-}`
 
 ### Create Book (Role : ADMIN)
 ##### Method: POST
@@ -240,19 +201,6 @@ live:`http://localhost:8080/api/v1/authors/`
 
 live :`https://hel-library-web-service.onrender.com/api/v1/authors/`
 
-Response  : `[
-{
-"id": "85e37ac3-66eb-47a4-89f5-b7ff7d8d3dc0",
-"name": "Elias Lönnrot",
-"info": "Originally a rural physician, Elias Lönnrot (1802–1884) took advantage of time spent in Kainuu, northeastern Finland, by collecting Finnish poems sung in popular oral tradition. Impassioned by his discovery, he published the fruits of his labour under the title Kalevala. The vast mythological epic helped awaken and cement the Finnish national consciousness of the 19th century. The Kalevala themes, complemented by trips to Karelia, have influenced many Finnish artists, including the composer Jean Sibelius.",
-"image": "https://fastly.picsum.photos/id/607/200/300.jpg?hmac=ZEvzqI62NudR3rgqTkRZzFnlEeOt9z-b_i8VdLoTgoI"
-},
-{
-"id": "5bf4863a-79c7-4db1-a8db-03cac864ce0a",
-"name": "Chiquita Hammerberg",
-"info": "Chiquita Hammerberg (22 May 1859 – 7 July 1930) was a British writer and physician. He created the character Sherlock Holmes in 1887 for A Study in Scarlet, the first of four novels and fifty-six short stories about Holmes and Dr. Watson. The Sherlock Holmes stories are milestones in the field of crime fiction.Doyle was a prolific writer; other than Holmes stories, his works include fantasy and science fiction stories about Professor Challenger, and humorous stories about the Napoleonic soldier Brigadier Gerard, as well as plays, romances, poetry, non-fiction, and historical novels. One of Doyle's early short stories, J.Habakuk Jephson's Statement (1884), helped to popularise the mystery of the Mary Celeste.",
-"image": "https://fastly.picsum.photos/id/397/200/300.jpg?hmac=9VBInLrifj_yyc2JuJSAVIfj9yQdt5Ovm2sHmvva-48"
-},]`
 
 ### Get Single Author
 ##### Method: GET
@@ -263,14 +211,6 @@ localhost: `http://localhost:8080/api/v1/authors/${authorId}`
 
 live :`https://hel-library-web-service.onrender.com/api/v1/authors/${authorId}`
 
-Response : 
-`
-{
-"id": "5bf4863a-79c7-4db1-a8db-03cac864ce0a",
-"name": "Chiquita Hammerberg",
-"info": "Chiquita Hammerberg (22 May 1859 – 7 July 1930) was a British writer and physician. He created the character Sherlock Holmes in 1887 for A Study in Scarlet, the first of four novels and fifty-six short stories about Holmes and Dr. Watson. The Sherlock Holmes stories are milestones in the field of crime fiction.Doyle was a prolific writer; other than Holmes stories, his works include fantasy and science fiction stories about Professor Challenger, and humorous stories about the Napoleonic soldier Brigadier Gerard, as well as plays, romances, poetry, non-fiction, and historical novels. One of Doyle's early short stories, J.Habakuk Jephson's Statement (1884), helped to popularise the mystery of the Mary Celeste.",
-"image": "https://fastly.picsum.photos/id/397/200/300.jpg?hmac=9VBInLrifj_yyc2JuJSAVIfj9yQdt5Ovm2sHmvva-48"
-}`
 
 ### Create Author (Role : ADMIN)
 #### Method: POST
@@ -381,19 +321,6 @@ localhost:`http://localhost:8080/api/v1/genres/`
 
 live :`https://hel-library-web-service.onrender.com/api/v1/genres/`
 
-Response : `[
-{
-"id": "ada0114a-f706-4d78-a2ec-1f437331f2e4",
-"name": "children fantasy",
-"coverImage": "https://fastly.picsum.photos/id/287/200/300.jpg?hmac=9JSSeZMseJ8l_WTFAMmF3HXoyYmKFzQxmagpyWBefTA",
-"description": " Children Fantasy encompasses a huge part of the book world. It’s one of the most popular book genres out there—a personal favorite of mine to read and write."
-},
-{
-"id": "9b036236-c28b-400e-b1d8-8b2c64a7b0b6",
-"name": "sci-fiction",
-"coverImage": "https://fastly.picsum.photos/id/532/200/300.jpg?hmac=77wsdhKY-O9QmZj8Fmkuc_h3fj6nJXCxQcXCRhX4Vos",
-"description": "Sci-fi encompasses a huge part of the book world. It’s one of the most popular book genres out there—a personal favorite of mine to read and write."
-},]`
 
 ### Get Single Genre
 ##### Method: GET
@@ -405,12 +332,6 @@ localhost:`http://localhost:8080/api/v1/genres/${genreId}`
 
 live :`https://hel-library-web-service.onrender.com/api/v1/genres/${genreId}`
 
-Response : `{
-"id": "ada0114a-f706-4d78-a2ec-1f437331f2e4",
-"name": "children fantasy",
-"coverImage": "https://fastly.picsum.photos/id/287/200/300.jpg?hmac=9JSSeZMseJ8l_WTFAMmF3HXoyYmKFzQxmagpyWBefTA",
-"description": " Children Fantasy encompasses a huge part of the book world. It’s one of the most popular book genres out there—a personal favorite of mine to read and write."
-}`
 
 ### Create Genre (Role : ADMIN)
 #### Method : POST
@@ -569,8 +490,6 @@ live:`https://hel-library-web-service.onrender.com/api/v1/transactions/return/${
 
 Header : `Bearer Token`
 
-Response : Book returned
-
 
 ### Get All Transactions (Role : ADMIN)
 ##### Method: GET
@@ -584,26 +503,6 @@ live:`https://hel-library-web-service.onrender.com/api/v1/admin/transactions
 
 Header : `Bearer Token`
 
-Response :
-` [
-{
-"id": "7cf9d373-84e3-4459-9c13-4b6f5796b8f7",
-"user": "3e0c1077-fe73-453e-b08f-a2659f7ca8ef",
-"book": "20136d35-94a5-44d1-bd84-8b804ee31fb0",
-"borrowDate": "2023-05-17T08:10:14.461+00:00",
-"returnDate": "2023-05-17T08:12:15.425+00:00",
-"toBeReturned": "2023-06-16T08:10:14.461+00:00",
-"returned": true
-},
-{
-"id": "8346ca42-049e-4ab0-8621-5b3aad156543",
-"user": "3e0c1077-fe73-453e-b08f-a2659f7ca8ef",
-"book": "4cf651a0-9a93-483b-967d-5d6ac868db62",
-"borrowDate": "2023-05-17T08:07:21.512+00:00",
-"returnDate": "2023-05-17T09:00:27.747+00:00",
-"toBeReturned": "2023-05-27T08:07:21.512+00:00",
-"returned": false
-},]`
 
 ### Transaction history of user (Role : User)
 ##### Method: GET
@@ -617,23 +516,6 @@ live:`https://hel-library-web-service.onrender.com/api/v1/transactions/user/${us
 
 Header : `Bearer Token`
 
-Response :
-`"id": "7cf9d373-84e3-4459-9c13-4b6f5796b8f7",
-"user": "3e0c1077-fe73-453e-b08f-a2659f7ca8ef",
-"book": "20136d35-94a5-44d1-bd84-8b804ee31fb0",
-"borrowDate": "2023-05-17T08:10:14.461+00:00",
-"returnDate": "2023-05-17T08:12:15.425+00:00",
-"toBeReturned": "2023-06-16T08:10:14.461+00:00",
-"returned": true
-}
-"id": "7cf9d373-84e3-4459-9c13-4b6f5796b8f7",
-"user": "3e0c1077-fe73-453e-b08f-a2659f7ca8ef",
-"book": "20136d35-94a5-44d1-bd84-8b804ee31fb0",
-"borrowDate": "2023-05-17T08:10:14.461+00:00",
-"returnDate": "2023-05-17T08:12:15.425+00:00",
-"toBeReturned": "2023-06-16T08:10:14.461+00:00",
-"returned": false
-}`
 
 ### Delete Transaction (Role: ADMIN)
 ##### Method: Delete
@@ -740,28 +622,11 @@ live:`https://hel-library-web-service.onrender.com/api/v1/admin/users`
 
 Header : `Bearer Token`
 
-Response : `[
-[
-{
-"id": "d5e532d2-8cba-4582-9466-417f743d22ef",
-"username": "Deepika",
-"role": "ADMIN"
-},
-{
-"id": "3e0c1077-fe73-453e-b08f-a2659f7ca8ef",
-"username": "Magi",
-"role": "USER"
-},
-]`
-
 
 ![highlevel.png](highlevel.png)
 
 
 ![erd.png](erd.png)
-
-
-
 
 
 
