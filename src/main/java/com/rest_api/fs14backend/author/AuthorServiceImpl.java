@@ -35,7 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findOneById(UUID authorId) {
-        return authorRepository.findById(authorId).orElse(null);
+        return authorRepository.findById(authorId).orElseThrow(AuthorNotFoundException :: new);
     }
 
 
@@ -61,13 +61,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author updateOne(UUID authorId, Author author) {
         Author foundAuthor = findOneById(authorId);
-        if (foundAuthor != null) {
             foundAuthor.setName(author.getName());
             foundAuthor.setInfo(author.getInfo());
             foundAuthor.setImage(author.getImage());
             return authorRepository.save(foundAuthor);
-        }
-        return null;
     }
 
     /**
@@ -78,14 +75,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void deleteOne(UUID authorId) {
         Author foundAuthor =  findOneById(authorId);
-        if(foundAuthor != null){
             List<Book> foundBooks = bookRepository.findAllByAuthorId(foundAuthor.getId());
             if(foundBooks.size() > 0){
                 throw new AuthorCannotBeDeletedException();
             }
             authorRepository.deleteById(authorId);
-        } else {
-           throw new AuthorNotFoundException();
-        }
     }
 }

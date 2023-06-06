@@ -1,20 +1,17 @@
 package com.rest_api.fs14backend.transaction;
 
 
-import com.rest_api.fs14backend.exceptions.Genre.GenreBadInputRequestException;
-import com.rest_api.fs14backend.exceptions.Transaction.IllegalUserAccessException;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeReturned;
-import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
-
 import java.util.List;
 import java.util.UUID;
+
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
 
 @RestController
 @RequestMapping("/api/v1/transactions")
@@ -24,9 +21,9 @@ public class TransactionController {
 
 
     /**
-     *
-     * @param userId
-     * @param authorization
+     * This allows user to get his/her transactions provide user id
+     * @param userId User id from path
+     * @param authorization bearer token from header
      * @return list of transactions
      */
     @GetMapping("/user/{userId}")
@@ -44,24 +41,24 @@ public class TransactionController {
 
     /**
      *
-     * @param borrowDto
-     * @param authorization
+     * This method allows user to borrow a book by creating a transaction
+     * @param borrowDto Borrow dto from request body
+     * @param authorization Bearer token from header
      * @return created transaction
      */
     @PostMapping("/borrow")
     public ResponseEntity<Transaction> createTransaction
-    (@RequestBody BorrowDto borrowDto, @RequestHeader String authorization) {
+    (@RequestBody @Valid BorrowDto borrowDto, @RequestHeader String authorization) {
         try{
             Transaction createdTransaction  = transactionService.borrowBook(borrowDto, authorization);
             return new ResponseEntity<>(createdTransaction,HttpStatus.CREATED);
         } catch (DataIntegrityViolationException e){
             throw new TransactionBadInputRequestException();
         }
-
     }
 
     /**
-     *
+     * This method allows user to return book by updating
      * @param transactionId
      * @param authorization
      * @return response string

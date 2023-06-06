@@ -20,6 +20,7 @@ public class BookController {
     BookService bookService;
 
     /**
+     * This method allows to get all books
      *
      * @return list of all books
      */
@@ -31,8 +32,10 @@ public class BookController {
 
     /**
      *
-     * @param bookId
-     * @return book which matches given id
+     *  This method allows to get book provided book id
+     *
+     * @param bookId book id from path
+     * @return book which matches the given id
      */
 
     @GetMapping("{bookId}")
@@ -43,7 +46,9 @@ public class BookController {
 
     /**
      *
-     * @param authorId
+     * This method allows get all books of an author provided author id
+     *
+     * @param authorId author id from path
      * @return list of all books which matches given author id
      */
 
@@ -55,7 +60,9 @@ public class BookController {
 
     /**
      *
-     * @param genreId
+     * This method allows get all books of an author provided genre id
+     * @param genreId genre id from path
+     *
      * @return list of all books which matches given genre id
      */
 

@@ -3,6 +3,7 @@ package com.rest_api.fs14backend.genre;
 import com.rest_api.fs14backend.author.Author;
 import com.rest_api.fs14backend.book.Book;
 import com.rest_api.fs14backend.book.BookRepository;
+import com.rest_api.fs14backend.book.BookService;
 import com.rest_api.fs14backend.exceptions.Genre.GenreCannotBeDeletedException;
 import com.rest_api.fs14backend.exceptions.Genre.GenreNotFoundException;
 import com.rest_api.fs14backend.exceptions.author.AuthorCannotBeDeletedException;
@@ -37,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
      */
     @Override
     public Genre findOneById(UUID genreId) {
-        return genreRepository.findById(genreId).orElse(null);
+        return genreRepository.findById(genreId).orElseThrow(GenreNotFoundException::new);
     }
 
     /**
@@ -60,14 +61,11 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre updateOne(UUID genreId, @RequestBody Genre genre) {
-        Genre foundGenre = genreRepository.findById(genreId).orElse(null);
-        if (foundGenre != null) {
+        Genre foundGenre = findOneById(genreId);
             foundGenre.setName(genre.getName());
             foundGenre.setCoverImage(genre.getCoverImage());
             foundGenre.setDescription(genre.getDescription());
             return genreRepository.save(foundGenre);
-        }
-        return null;
     }
 
     /**
@@ -78,14 +76,10 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public void deleteOne(UUID genreId) {
         Genre foundGenre =  findOneById(genreId);
-        if(foundGenre != null){
-            List<Book> foundBooks = bookRepository.findAllByAuthorId(foundGenre.getId());
+            List<Book> foundBooks = bookRepository.findAllByGenreId(foundGenre.getId());
             if(foundBooks.size() > 0){
                 throw new GenreCannotBeDeletedException();
             }
             genreRepository.deleteById(genreId);
-        } else {
-            throw new GenreNotFoundException();
-        }
     }
 }

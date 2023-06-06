@@ -20,8 +20,8 @@ public class UserController {
     UserService userService;
 
     /**
-     *
-     * @param user
+     * This method allows user to register by providing username and password
+     * @param user User object from request body
      * @return response string
      */
     @PostMapping("/signup")
@@ -30,14 +30,13 @@ public class UserController {
             String createdUserMessage = userService.singUp(user);
             return new ResponseEnt(200,"User created Successfully");
         } catch (DataIntegrityViolationException e){
-
             throw new UserBadInputRequestException();
         }
     }
 
     /**
-     *
-     * @param authRequest
+     * This method allows user to sign in / login by providing matching username and password
+     * @param authRequest Auth request object from request body
      * @return token
      */
 
@@ -54,17 +53,13 @@ public class UserController {
 
     /**
      *
-     * @param userId
+     *  This method allows to get single user provided user id and token
+     * @param userId  User id from path
      * @return user which matches given id
      */
     @GetMapping("/{userId}")
     public ResponseEntity<User> findByUserId(@PathVariable UUID userId) {
-        try{
             User foundUser = userService.findOneById(userId);
-            return foundUser != null ? new ResponseEntity<>(foundUser,HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND) ;
-        } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return new ResponseEntity<>(foundUser,HttpStatus.OK);
     }
 }

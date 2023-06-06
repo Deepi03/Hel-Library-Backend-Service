@@ -39,7 +39,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 
     /**
-     *
+     * Get all Transactions
      * @return list of transactions
      */
     @Override
@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     *
+     * Get Transaction by id
      * @param userId
      * @param authorization
      * @return  list of transactions which matches the given user id
@@ -64,7 +64,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     *
+     *  Get all transaction based on book id
      * @param bookId
      * @return list of transactions which matches given book id
      */
@@ -74,7 +74,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     *
+     * Borrow book
      * @param borrowDto
      * @param authorization
      * @return created transaction
@@ -108,7 +108,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     *
+     * Return book
      * @param transactionId
      * @param authorization
      */
@@ -135,7 +135,6 @@ public class TransactionServiceImpl implements TransactionService {
                             throw new BookNotFoundException();
                         }
                     } else {
-                    System.out.println("%%%% " + "transaction cannot be returned");
                         throw new TransactionCannotBeReturned();
                     }
                 } else  {
@@ -148,7 +147,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     *
+     * Delete Transaction
      * @param transactionId
      */
 

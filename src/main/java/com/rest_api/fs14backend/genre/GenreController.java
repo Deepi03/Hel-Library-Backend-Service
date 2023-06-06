@@ -38,12 +38,7 @@ public class GenreController {
 
     @GetMapping("/{genreId}")
     public ResponseEntity<Genre> findGenreById(@PathVariable UUID genreId) {
-        try {
             Genre foundGenre = genreService.findOneById(genreId);
-            return foundGenre != null ? new ResponseEntity<>(foundGenre, HttpStatus.OK)
-                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return  new ResponseEntity<>(foundGenre, HttpStatus.OK);
     }
 }

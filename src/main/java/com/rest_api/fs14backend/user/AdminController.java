@@ -16,6 +16,7 @@ import com.rest_api.fs14backend.genre.Genre;
 import com.rest_api.fs14backend.genre.GenreService;
 import com.rest_api.fs14backend.transaction.Transaction;
 import com.rest_api.fs14backend.transaction.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -44,10 +45,12 @@ public class AdminController {
     @Autowired
     TransactionService transactionService;
 
-    /** ==== Author === **/
+    /* ==== Author === **/
     /**
+     *  This method allows to create author
      *
-     * @param author
+     * @param author  Author object from request body
+     *
      * @return created author
      */
     @PostMapping("/authors")
@@ -62,20 +65,19 @@ public class AdminController {
 
     /**
      *
-     * @param authorId
-     * @param author
+     * This method is to  update an existing author provided authorId
+     *
+     * @param authorId : Author id from path
+     * @param author : Author object with updated properties from request body
+     *
      * @return update author
      */
 
     @PutMapping("/authors/{authorId}")
     public ResponseEntity<Author> updateAuthorById(@PathVariable UUID authorId,
-                                                   @RequestBody Author author) {
+                                                   @RequestBody @Valid Author author) {
         try{
             Author updatedAuthor = authorService.updateOne(authorId,author);
-            if(updatedAuthor == null )
-            {
-                throw new AuthorNotFoundException();
-            }
             return new ResponseEntity<>(updatedAuthor,HttpStatus.OK);
         } catch (DataIntegrityViolationException e){
             throw new AuthorBadInputRequestException();
@@ -83,25 +85,22 @@ public class AdminController {
     }
 
     /**
+     * This method allows to delete  existing author  provided authorId when the author is not mapped in book
      *
-      * @param authorId
+     * @param authorId  Author id from path
      * @return response string
      */
     @DeleteMapping("/authors/{authorId}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable UUID authorId) {
-        try {
             authorService.deleteOne(authorId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            throw new AuthorBadInputRequestException();
-        }
     }
 
-    /** ==== Book === **/
+    /* ==== Book === **/
 
     /**
-     *
-     * @param bookDto
+     * This method allows to create a book
+     * @param bookDto BookDto object from request body
      * @return created book
      */
     @PostMapping("/books")
@@ -109,18 +108,15 @@ public class AdminController {
         try{
             Book createdBook = bookService.createOne(bookDto);
             return new ResponseEntity<>(createdBook,HttpStatus.CREATED);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new BookBadInputRequestException();
-        }catch (Exception e){
-            return null;
         }
-
     }
 
     /**
-     *
-     * @param bookId
-     * @param bookDto
+     * This method allows to update an existing book provided book id
+     * @param bookId book id from path
+     * @param bookDto Book dto object with updated properties from request body
      * @return updated book
      */
 
@@ -128,10 +124,6 @@ public class AdminController {
     public  ResponseEntity<Book> updateBookById(@PathVariable UUID bookId,@RequestBody BookDto bookDto){
         try{
             Book updatedBook = bookService.updateOneById(bookId,bookDto);
-            if(updatedBook == null )
-            {
-                throw new BookNotFoundException();
-            }
             return new ResponseEntity<>(updatedBook,HttpStatus.OK);
         } catch (DataIntegrityViolationException e){
             throw new BookBadInputRequestException();
@@ -140,25 +132,24 @@ public class AdminController {
 
     /**
      *
-     * @param bookId
-     * @return resposne string
+     *  This method allows to delete book provided book id when the book is not mapped in transaction
+     * @param bookId book id from path
+     * @return response string
      */
 
     @DeleteMapping("/books/{bookId}")
     public ResponseEntity<String> deleteBookId(@PathVariable UUID bookId) {
-        try {
             bookService.deleteOneById(bookId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            throw new BookBadInputRequestException();
-        }
     }
 
     /** ==== Genre === **/
 
     /**
+     * This method allows to create a genre
      *
-     * @param genre
+     * @param genre Genre Object from request body
+     *
      * @return created genre
      */
     @PostMapping("/genres")
@@ -173,8 +164,10 @@ public class AdminController {
 
     /**
      *
-     * @param genreId
-     * @param genre
+     * This method is allows to update an existing genre provide genreId
+     *
+     * @param genreId Genre id from path
+     * @param genre  Genre object with updated data from request body
      * @return updated genre
      */
 
@@ -182,10 +175,6 @@ public class AdminController {
     public ResponseEntity<Genre> updateGenreById(@PathVariable UUID genreId,@RequestBody Genre genre) {
         try{
             Genre updatedGenre = genreService.updateOne(genreId,genre);
-            if(updatedGenre == null )
-            {
-                throw new GenreNotFoundException();
-            }
             return  new ResponseEntity<>(updatedGenre,HttpStatus.OK);
         }
         catch (DataIntegrityViolationException e){
@@ -194,20 +183,17 @@ public class AdminController {
     }
 
     /**
+     *This method allows to delete genre provide genreId  when the genre is not mapped in book
      *
-     * @param genreId
+     * @param genreId Genre id from path
+     *
      * @return response string
      */
 
     @DeleteMapping("/genres/{genreId}")
     public ResponseEntity<String> deleteGenreById(@PathVariable UUID genreId) {
-        try{
             genreService.deleteOne(genreId);
             return new ResponseEntity<>("Genre deleted",HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            throw new GenreBadInputRequestException();
-        }
-
     }
 
 
@@ -215,7 +201,7 @@ public class AdminController {
     /** ==== Users === **/
 
     /**
-     *
+     * This method allows to get all users
      * @return list of all users
      */
     @GetMapping("/users")
@@ -232,7 +218,7 @@ public class AdminController {
     /** ==== Transactions === **/
 
     /**
-     *
+     * This method allows to get all transactions
      * @return list of all transactions
      */
     @GetMapping("/transactions")

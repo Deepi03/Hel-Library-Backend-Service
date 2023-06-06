@@ -52,12 +52,8 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Book findOneById(UUID id) {
-        Book foundBook = bookRepository.findById(id).orElse(null);
-        if(foundBook == null){
-            throw new BookNotFoundException();
-        } else {
-            return foundBook;
-        }
+        return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+
     }
 
     /**
@@ -114,25 +110,20 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Book updateOneById(UUID id, BookDto bookDto) {
-        Book foundBook = bookRepository.findById(id).orElse(null);
+        Book foundBook = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
         UUID authorId = bookDto.getAuthor();
         Author foundAuthor = authorService.findOneById(authorId);
         UUID genreId = bookDto.getGenre();
         Genre foundGenre = categoryService.findOneById(genreId);
-
-        if (foundBook != null) {
-            foundBook.setIsbn(bookDto.getIsbn());
-            foundBook.setTitle(bookDto.getTitle());
-            foundBook.setAuthor(foundAuthor);
-            foundBook.setGenre(foundGenre);
-            foundBook.setPublishedDate(bookDto.getPublishedDate());
-            foundBook.setPublisher(bookDto.getPublisher());
-            foundBook.setCover(bookDto.getCover());
-            foundBook.setDescription(bookDto.getDescription());
-            foundBook.setAvailable(bookDto.isAvailable());
-            return bookRepository.save(foundBook);
-        }
-        return null;
+        foundBook.setIsbn(bookDto.getIsbn());
+        foundBook.setTitle(bookDto.getTitle());
+        foundBook.setAuthor(foundAuthor);
+        foundBook.setGenre(foundGenre);
+        foundBook.setPublishedDate(bookDto.getPublishedDate());
+        foundBook.setPublisher(bookDto.getPublisher());
+        foundBook.setCover(bookDto.getCover());
+        foundBook.setDescription(bookDto.getDescription());
+        return bookRepository.save(foundBook);
     }
 
     /**
@@ -142,16 +133,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteOneById(UUID bookId) {
-        Book foundBook = bookRepository.findById(bookId).orElse(null);
-        if(foundBook != null){
-            List<Transaction> foundTransactions = transactionRepository.findAllByBookId(foundBook.getId());
-            if(foundTransactions.size() > 0){
+        Book foundBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        List<Transaction> foundTransactions = transactionRepository.findAllByBookId(foundBook.getId());
+        if(foundTransactions.size() > 0){
                 throw new BookCannotBeDeletedException();
             }
             bookRepository.deleteById(bookId);
-        } else {
-            throw new BookNotFoundException();
-        }
+
     }
 }
 
