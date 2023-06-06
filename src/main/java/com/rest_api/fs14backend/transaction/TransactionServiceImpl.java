@@ -2,8 +2,8 @@ package com.rest_api.fs14backend.transaction;
 
 
 import com.rest_api.fs14backend.book.BookService;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeDeletedException;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionNotFoundException;
+import com.rest_api.fs14backend.exceptions.Transaction.*;
+import com.rest_api.fs14backend.exceptions.book.BookNotAvailableException;
 import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
 import com.rest_api.fs14backend.user.UserService;
 import com.rest_api.fs14backend.utils.JwtUtils;
@@ -82,28 +82,29 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction borrowBook(BorrowDto borrowDto, String authorization)  {
         UUID userId = borrowDto.getUserId();
-        User foundUser =userService.findOneById(userId);
-        UUID bookId = borrowDto.getBookId();
-        Book foundBook =bookService.findOneById(bookId);
         String token = authorization.substring(7);
         String userIdFromToken = jwtUtils.extractUserId(token);
         if (userIdFromToken.equals(userId.toString())) {
+            User foundUser =userService.findOneById(userId);
+            UUID bookId = borrowDto.getBookId();
+            Book foundBook =bookService.findOneById(bookId);
             if (foundBook != null) {
                 if (foundBook.isAvailable()) {
-                   // System.out.println("####" + " book "+foundBook +" user "+ foundUser);
                     Transaction borrow = transactionMapper.toTransaction(foundUser, foundBook,
                             new Date(), toBeReturnedDate(borrowDto.getDay().toString()), false);
                     foundBook.setAvailable(false);
                     bookRepository.save(foundBook);
                     return transactionRepository.save(borrow);
                 } else {
-                    throw new RuntimeException("Book is not available");
+                    throw new BookNotAvailableException();
                 }
             } else {
-                return null;
+                throw new BookNotFoundException();
             }
+        } else {
+            throw new IllegalUserAccessException();
         }
-        return null;
+
     }
 
     /**
@@ -123,15 +124,22 @@ public class TransactionServiceImpl implements TransactionService {
             if (foundUser != null) {
                 String userId = foundUser.getId().toString();
                 if (userIdFromToken.equals(userId)) {
-                    foundTransaction.setReturned(true);
-                    foundTransaction.setReturnDate(new Date());
-                    transactionRepository.save(foundTransaction);
-                    if (foundBook != null) {
-                        foundBook.setAvailable(true);
-                        bookRepository.save(foundBook);
+                if(!foundTransaction.isReturned()){
+                        foundTransaction.setReturned(true);
+                        foundTransaction.setReturnDate(new Date());
+                        transactionRepository.save(foundTransaction);
+                        if (foundBook != null) {
+                            foundBook.setAvailable(true);
+                            bookRepository.save(foundBook);
+                        } else {
+                            throw new BookNotFoundException();
+                        }
                     } else {
-                        throw new BookNotFoundException();
+                    System.out.println("%%%% " + "transaction cannot be returned");
+                        throw new TransactionCannotBeReturned();
                     }
+                } else  {
+                    throw new IllegalUserAccessException();
                 }
             }
         } else {

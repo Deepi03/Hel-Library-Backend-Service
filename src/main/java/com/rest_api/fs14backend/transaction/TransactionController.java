@@ -2,7 +2,10 @@ package com.rest_api.fs14backend.transaction;
 
 
 import com.rest_api.fs14backend.exceptions.Genre.GenreBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.Transaction.IllegalUserAccessException;
 import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
+import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeReturned;
+import com.rest_api.fs14backend.exceptions.book.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -51,9 +54,10 @@ public class TransactionController {
         try{
             Transaction createdTransaction  = transactionService.borrowBook(borrowDto, authorization);
             return new ResponseEntity<>(createdTransaction,HttpStatus.CREATED);
-        }  catch (Exception e){
+        } catch (DataIntegrityViolationException e){
             throw new TransactionBadInputRequestException();
         }
+
     }
 
     /**
@@ -64,12 +68,6 @@ public class TransactionController {
      */
     @GetMapping("/return/{transactionId}")
     public ResponseEntity<String> updateTransaction(@PathVariable UUID transactionId, @RequestHeader String authorization) {
-        try {
             transactionService.returnBook(transactionId, authorization);
             return new ResponseEntity<>("Book returned", HttpStatus.OK);}
-        catch (Exception e){
-                throw new TransactionBadInputRequestException();
-            }
-    }
-
 }

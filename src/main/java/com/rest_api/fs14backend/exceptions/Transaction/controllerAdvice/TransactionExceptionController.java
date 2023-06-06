@@ -1,9 +1,7 @@
 package com.rest_api.fs14backend.exceptions.Transaction.controllerAdvice;
 
 import com.rest_api.fs14backend.ResponseEnt;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionBadInputRequestException;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionCannotBeDeletedException;
-import com.rest_api.fs14backend.exceptions.Transaction.TransactionNotFoundException;
+import com.rest_api.fs14backend.exceptions.Transaction.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,6 +36,19 @@ public class TransactionExceptionController {
     @ResponseBody
     public ResponseEnt handleMismatchException(MethodArgumentTypeMismatchException methodArgumentTypeMismatchException) {
         return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), methodArgumentTypeMismatchException.getMessage());
+    }
+
+    @ExceptionHandler(value = IllegalUserAccessException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public ResponseEnt handleIllegal(IllegalUserAccessException illegalAccessException) {
+        return new ResponseEnt( HttpStatus.FORBIDDEN.value(), illegalAccessException.getMessage());
+    }
+    @ExceptionHandler(value = TransactionCannotBeReturned.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ResponseEnt handleTransactionCannotBeReturnedException(TransactionCannotBeReturned transactionCannotBeReturned) {
+        return new ResponseEnt( HttpStatus.BAD_REQUEST.value(), transactionCannotBeReturned.getMessage());
     }
 
 }
